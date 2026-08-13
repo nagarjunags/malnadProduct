@@ -1,0 +1,48 @@
+[
+  {
+    "id": "77bdd0a8-a5e2-49d9-b4b6-3dab45040b8b",
+    "name": "a.env",
+    "variables": [
+      {
+        "key": "BASE_URL",
+        "value": "http://localhost:9000",
+        "enabled": true
+      },
+      {
+        "key": "PUBLISHABLE_API_KEY",
+        "value": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+        "enabled": true
+      },
+      {
+        "key": "ADMIN_TOKEN",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "CUSTOMER_TOKEN",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "PRODUCT_ID",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "COLLECTION_ID",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "CART_ID",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "REGION_ID",
+        "value": "",
+        "enabled": true
+      }
+    ]
+  }
+]
