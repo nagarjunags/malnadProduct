@@ -371,7 +371,7 @@ const Shipping: React.FC<ShippingProps> = ({
               error={error}
               data-testid="delivery-option-error-message"
             />
-            {console.log(!cart.shipping_methods?.[0])/* */}
+            {/* {console.log(!cart.shipping_methods?.[0])/*ngrj cr */} */}
             <Button
               size="large"
               className="mt"
