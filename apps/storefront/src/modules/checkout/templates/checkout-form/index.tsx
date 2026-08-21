@@ -18,7 +18,7 @@ export default async function CheckoutForm({
   }
 
   const shippingMethods = await listCartShippingMethods(cart.id)
-  const paymentMethods = await listCartPaymentMethods(cart.region?.id ?? "")
+  const paymentMethods = await listCartPaymentMethods(cart.region?.id ?? "")//ngrj cr
 
   if (!shippingMethods || !paymentMethods) {
     return null
@@ -30,7 +30,7 @@ export default async function CheckoutForm({
 
       <Shipping cart={cart} availableShippingMethods={shippingMethods} />
 
-      <Payment cart={cart} availablePaymentMethods={paymentMethods} />
+      {/* <Payment cart={cart} availablePaymentMethods={paymentMethods} /> */}
 
       <Review cart={cart} />
     </div>
