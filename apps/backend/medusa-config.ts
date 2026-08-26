@@ -5,6 +5,7 @@ loadEnv(process.env.NODE_ENV || "development", process.cwd())
 module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
+
     http: {
       storeCors: process.env.STORE_CORS!,
       adminCors: process.env.ADMIN_CORS!,
@@ -13,13 +14,23 @@ module.exports = defineConfig({
       cookieSecret: process.env.COOKIE_SECRET,
     },
   },
+
+  admin: {
+    vite: () => {
+      return {
+        server: {
+          allowedHosts: ["n2ms2dmwk35q.shares.zrok.io"],
+        },
+      }
+    },
+  },
+
   modules: [
     {
       resolve: "@medusajs/medusa/payment",
       options: {
         providers: [
           {
-            // Provider ID in Medusa will be: pp_razorpay_razorpay
             resolve: "./src/modules/razorpay",
             id: "razorpay",
             options: {

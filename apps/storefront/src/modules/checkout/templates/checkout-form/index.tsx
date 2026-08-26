@@ -30,7 +30,7 @@ export default async function CheckoutForm({
 
       <Shipping cart={cart} availableShippingMethods={shippingMethods} />
 
-      <Payment cart={cart} availablePaymentMethods={paymentMethods} />//ngrj cr
+      <Payment cart={cart} availablePaymentMethods={paymentMethods} />
 
       <Review cart={cart} />
     </div>

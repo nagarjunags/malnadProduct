@@ -197,7 +197,7 @@ const RazorpayPaymentButton = ({
 }
 
 // ---------------------------------------------------------------------------
-// Stripe payment button (unchanged)
+// Stripe payment button (unchanged)-- Not used for But retained for future expansion
 // ---------------------------------------------------------------------------
 const StripePaymentButton = ({
   cart,

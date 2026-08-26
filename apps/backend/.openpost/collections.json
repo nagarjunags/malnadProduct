@@ -575,6 +575,27 @@
           }
         ],
         "folders": []
+      },
+      {
+        "id": "1787735858791",
+        "name": "Custom",
+        "requests": [
+          {
+            "id": "1787735865621",
+            "name": "test",
+            "method": "GET",
+            "url": "",
+            "params": [],
+            "headers": [],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
       }
     ],
     "variables": [
@@ -590,7 +611,7 @@
       },
       {
         "key": "adminToken",
-        "value": "",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rvcl9pZCI6InVzZXJfMDFLWlA3TldXTkQ5UVNNV0U0MEdLWlZEM1MiLCJhY3Rvcl90eXBlIjoidXNlciIsImF1dGhfaWRlbnRpdHlfaWQiOiJhdXRoaWRfMDFLWlA3TlgxMzlZRVBLOVM3RUJTNDdQOEciLCJhdXRoX3Byb3ZpZGVyIjoiZW1haWxwYXNzIiwiYXBwX21ldGFkYXRhIjp7InVzZXJfaWQiOiJ1c2VyXzAxS1pQN05XV05EOVFTTVdFNDBHS1pWRDNTIiwiY3VzdG9tZXJfaWQiOiJjdXNfMDFLWlA4Mk1TMkg0SjlaNTRaWDFTOUUwODQifSwidXNlcl9tZXRhZGF0YSI6e30sImlhdCI6MTc4NzczNzY0MSwiZXhwIjoxNzg3ODI0MDQxfQ.LWscTNM4Z7PRKJwnzAV1EVRVKNpfYlL2Ru4qhFicRAo",
         "enabled": true
       },
       {
@@ -600,7 +621,7 @@
       },
       {
         "key": "productId",
-        "value": "",
+        "value": "prod_01KZP734TB9SJS292081SR73EE",
         "enabled": true
       },
       {
