@@ -38,7 +38,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
               <div className="relative flex h-full">
                 <Popover.Button
                   data-testid="nav-menu-button"
-                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-ui-fg-base"
+                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-mpal-forest font-sans text-sm text-mpal-brown tracking-wide"
                 >
                   Menu
                 </Popover.Button>
@@ -65,7 +65,8 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                 <PopoverPanel className="flex flex-col absolute w-full pr-4 sm:pr-0 sm:w-1/3 2xl:w-1/4 sm:min-w-min h-[calc(100vh-1rem)] z-[51] inset-x-0 text-sm text-ui-fg-on-color m-2 backdrop-blur-2xl">
                   <div
                     data-testid="nav-menu-popup"
-                    className="flex flex-col h-full bg-[rgba(3,7,18,0.5)] rounded-rounded justify-between p-6"
+                    className="flex flex-col h-full rounded-rounded justify-between p-6"
+                    style={{ background: "rgba(45,80,22,0.92)", backdropFilter: "blur(16px)" }}
                   >
                     <div className="flex justify-end" id="xmark">
                       <button data-testid="close-menu-button" onClick={close}>
@@ -78,7 +79,8 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                           <li key={name}>
                             <LocalizedClientLink
                               href={href}
-                              className="text-3xl leading-10 hover:text-ui-fg-disabled"
+                              className="font-display text-3xl leading-10 hover:text-mpal-caramel transition-colors"
+                              style={{ color: "#F5ECD7" }}
                               onClick={close}
                               data-testid={`${name.toLowerCase()}-link`}
                             >
@@ -126,9 +128,8 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                           )}
                         />
                       </div>
-                      <Text className="flex justify-between txt-compact-small">
-                        © {new Date().getFullYear()} Medusa Store. All rights
-                        reserved.
+                      <Text className="flex justify-between txt-compact-small" style={{ color: "rgba(245,236,215,0.6)" }}>
+                        © {new Date().getFullYear()} mpal. All rights reserved.
                       </Text>
                     </div>
                   </div>

@@ -255,6 +255,42 @@ export async function initiatePaymentSession(
     .catch(medusaError)
 }
 
+export async function submitRazorpayPayment(
+  cart: HttpTypes.StoreCart,
+  paymentSessionId: string,
+  data: {
+    razorpay_payment_id: string
+    razorpay_order_id: string
+    razorpay_signature: string
+  }
+) {
+  const paymentCollectionId = cart.payment_collection?.id
+
+  if (!paymentCollectionId) {
+    throw new Error("No payment collection found for this cart")
+  }
+
+  const headers = {
+    ...(await getAuthHeaders()),
+  }
+
+  return sdk.client
+    .fetch(
+      `/store/payment-collections/${paymentCollectionId}/payment-sessions/${paymentSessionId}/razorpay`,
+      {
+        method: "POST",
+        body: data,
+        headers,
+      }
+    )
+    .then(async (response) => {
+      const cartCacheTag = await getCacheTag("carts")
+      revalidateTag(cartCacheTag)
+      return response
+    })
+    .catch(medusaError)
+}
+
 export async function applyPromotions(codes: string[]) {
   const cartId = await getCartId()
 

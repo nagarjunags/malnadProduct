@@ -33,6 +33,18 @@ module.exports = {
           80: "#1F2937",
           90: "#111827",
         },
+        /* mpal brand palette — Malnad earth tones */
+        mpal: {
+          forest:  "#2D5016", /* deep malnad forest green */
+          green:   "#4A7C2F", /* mid canopy green */
+          moss:    "#6B8F47", /* light moss */
+          brown:   "#5C3A1E", /* rich coffee brown */
+          mocha:   "#8B5E3C", /* lighter mocha */
+          caramel: "#C4874A", /* caramel / jaggery */
+          cream:   "#F5ECD7", /* natural cream / rice */
+          sand:    "#EAD5B0", /* warm sand */
+          mist:    "#F9F5EE", /* misty pale bg */
+        },
       },
       borderRadius: {
         none: "0px",
@@ -59,6 +71,8 @@ module.exports = {
       },
       fontFamily: {
         sans: [
+          "var(--font-sans)",
+          "Lato",
           "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
@@ -67,6 +81,12 @@ module.exports = {
           "Helvetica Neue",
           "Ubuntu",
           "sans-serif",
+        ],
+        display: [
+          "var(--font-display)",
+          "Playfair Display",
+          "Georgia",
+          "serif",
         ],
       },
       keyframes: {

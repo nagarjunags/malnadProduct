@@ -1,6 +1,6 @@
 "use client"
 import { RadioGroup } from "@headlessui/react"
-import { isStripeLike, paymentInfoMap } from "@lib/constants"
+import { isRazorpay, isStripeLike, paymentInfoMap } from "@lib/constants"
 import { initiatePaymentSession } from "@lib/data/cart"
 import { CheckCircleSolid, CreditCard } from "@medusajs/icons"
 import ErrorMessage from "@modules/checkout/components/error-message"
@@ -47,25 +47,27 @@ const Payment = ({
   const setPaymentMethod = async (method: string) => {
     setError(null)
     setSelectedPaymentMethod(method)
-    if (isStripeLike(method)) {
-      await initiatePaymentSession(cart, {
-        provider_id: method,
-      })
+    // Initiate a payment session for Stripe-like and Razorpay providers on selection
+    if (isStripeLike(method) || isRazorpay(method)) {
+      await initiatePaymentSession(cart, { provider_id: method })
     }
   }
 
   const paidByGiftcard = !!(
-    (cart as unknown as Record<string, unknown>)?.gift_cards && ((cart as unknown as Record<string, unknown>)?.gift_cards as unknown[])?.length > 0 && cart?.total === 0
+    (cart as unknown as Record<string, unknown>)?.gift_cards &&
+    ((cart as unknown as Record<string, unknown>)?.gift_cards as unknown[])
+      ?.length > 0 &&
+    cart?.total === 0
   )
 
   const paymentReady =
-    (activeSession && (cart?.shipping_methods?.length ?? 0) !== 0) || paidByGiftcard
+    (activeSession && (cart?.shipping_methods?.length ?? 0) !== 0) ||
+    paidByGiftcard
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams)
       params.set(name, value)
-
       return params.toString()
     },
     [searchParams]
@@ -95,9 +97,7 @@ const Payment = ({
       if (!shouldInputCard) {
         return router.push(
           pathname + "?" + createQueryString("step", "review"),
-          {
-            scroll: false,
-          }
+          { scroll: false }
         )
       }
     } catch (err) {
@@ -142,33 +142,35 @@ const Payment = ({
       <div>
         <div className={isOpen ? "block" : "hidden"}>
           {!paidByGiftcard && availablePaymentMethods?.length && (
-            <>
-              <RadioGroup
-                value={selectedPaymentMethod}
-                onChange={(value: string) => setPaymentMethod(value)}
-              >
-                {availablePaymentMethods.map((paymentMethod) => (
-                  <div key={paymentMethod.id}>
-                    {isStripeLike(paymentMethod.id) ? (
-                      <StripeCardContainer
-                        paymentProviderId={paymentMethod.id}
-                        selectedPaymentOptionId={selectedPaymentMethod}
-                        paymentInfoMap={paymentInfoMap}
-                        setCardBrand={setCardBrand}
-                        setError={setError}
-                        setCardComplete={setCardComplete}
-                      />
-                    ) : (
-                      <PaymentContainer
-                        paymentInfoMap={paymentInfoMap}
-                        paymentProviderId={paymentMethod.id}
-                        selectedPaymentOptionId={selectedPaymentMethod}
-                      />
-                    )}
-                  </div>
-                ))}
-              </RadioGroup>
-            </>
+            <RadioGroup
+              value={selectedPaymentMethod}
+              onChange={(value: string) => setPaymentMethod(value)}
+            >
+              {availablePaymentMethods.map((paymentMethod) => {
+                if (isStripeLike(paymentMethod.id)) {
+                  return (
+                    <StripeCardContainer
+                      key={paymentMethod.id}
+                      paymentProviderId={paymentMethod.id}
+                      selectedPaymentOptionId={selectedPaymentMethod}
+                      paymentInfoMap={paymentInfoMap}
+                      setCardBrand={setCardBrand}
+                      setError={setError}
+                      setCardComplete={setCardComplete}
+                    />
+                  )
+                }
+                // Razorpay and all other providers render as a standard radio option
+                return (
+                  <PaymentContainer
+                    key={paymentMethod.id}
+                    paymentInfoMap={paymentInfoMap}
+                    paymentProviderId={paymentMethod.id}
+                    selectedPaymentOptionId={selectedPaymentMethod}
+                  />
+                )
+              })}
+            </RadioGroup>
           )}
 
           {paidByGiftcard && (
@@ -202,7 +204,7 @@ const Payment = ({
             data-testid="submit-payment-button"
           >
             {!activeSession && isStripeLike(selectedPaymentMethod)
-              ? " Enter card details"
+              ? "Enter card details"
               : "Continue to review"}
           </Button>
         </div>

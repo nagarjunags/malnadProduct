@@ -1,7 +1,7 @@
 "use client"
 
-import { isManual, isStripeLike } from "@lib/constants"
-import { placeOrder } from "@lib/data/cart"
+import { isManual, isRazorpay, isStripeLike } from "@lib/constants"
+import { placeOrder, submitRazorpayPayment } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
 import { Button } from "@modules/common/components/ui"
 import { useElements, useStripe } from "@stripe/react-stripe-js"
@@ -24,12 +24,22 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
     !cart.email ||
     (cart.shipping_methods?.length ?? 0) < 1
 
-  const paymentSession = cart.payment_collection?.payment_sessions?.[0]
-
+  const paymentSession = cart.payment_collection?.payment_sessions?.find(
+    (s) => s.status === "pending"
+  )
+//ngrj cr -- switch case the review button will return th ebutton related to the selected payment option
   switch (true) {
     case isStripeLike(paymentSession?.provider_id):
       return (
         <StripePaymentButton
+          notReady={notReady}
+          cart={cart}
+          data-testid={dataTestId}
+        />
+      )
+    case isRazorpay(paymentSession?.provider_id):
+      return (
+        <RazorpayPaymentButton
           notReady={notReady}
           cart={cart}
           data-testid={dataTestId}
@@ -44,6 +54,153 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
   }
 }
 
+// ---------------------------------------------------------------------------
+// Razorpay payment button
+// Opens Razorpay checkout modal using order data stored in the payment session,
+// verifies payment on the backend, then places the order via Medusa.
+// ---------------------------------------------------------------------------
+const loadRazorpayScript = (): Promise<void> =>
+  new Promise((resolve, reject) => {
+    if (typeof window === "undefined") {
+      return reject(new Error("window is undefined"))
+    }
+    if ((window as any).Razorpay) {
+      return resolve()
+    }
+    const script = document.createElement("script")
+    script.src = "https://checkout.razorpay.com/v1/checkout.js"
+    script.async = true
+    script.onload = () => resolve()
+    script.onerror = () => reject(new Error("Failed to load Razorpay script"))
+    document.body.appendChild(script)
+  })
+
+const RazorpayPaymentButton = ({
+  cart,
+  notReady,
+  "data-testid": dataTestId,
+}: {
+  cart: HttpTypes.StoreCart
+  notReady: boolean
+  "data-testid"?: string
+}) => {
+  const [submitting, setSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const session = cart.payment_collection?.payment_sessions?.find(
+    (s) => s.status === "pending"
+  )
+
+  const handlePayment = async () => {
+    if (!session) {
+      setErrorMessage("No active payment session found")
+      return
+    }
+
+    setSubmitting(true)
+    setErrorMessage(null)
+
+    try {
+      await loadRazorpayScript()
+  console.log("---------------------------------------------------------------")//ngrjdoubt
+
+      console.log(cart)//ngrjdoubt
+      const sessionData = session.data as Record<string, any>
+      const razorpayOrderId = sessionData?.razorpay_order_id || sessionData?.id
+      const keyId =
+        sessionData?.key_id ||
+        process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID
+
+      if (!razorpayOrderId) {
+        throw new Error(
+          "Razorpay order ID not found in payment session. Please go back and re-select the payment method."
+        )
+      }
+
+      if (!keyId) {
+        throw new Error(
+          "Razorpay key is not configured. Set NEXT_PUBLIC_RAZORPAY_KEY_ID in your environment."
+        )
+      }
+
+      await new Promise<void>((resolve, reject) => {
+        const options: any = {
+          key: keyId,
+          amount: sessionData?.amount,
+          currency: sessionData?.currency || "INR",
+          order_id: razorpayOrderId,
+          name: "Order Payment",
+          prefill: {
+            name:
+              [
+                cart.billing_address?.first_name,
+                cart.billing_address?.last_name,
+              ]
+                .filter(Boolean)
+                .join(" ") || undefined,
+            email: cart.email || undefined,
+            contact: cart.billing_address?.phone || undefined,
+          },
+          handler: async function (response: any) {
+            try {
+              await submitRazorpayPayment(cart, session.id, {
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+              })
+              resolve()
+            } catch (err) {
+              reject(err)
+            }
+          },
+          modal: {
+            ondismiss: () => {
+              reject(new Error("Payment was cancelled"))
+            },
+          },
+        }
+
+        const rzp = new (window as any).Razorpay(options)
+        rzp.on("payment.failed", (response: any) => {
+          reject(
+            new Error(
+              response?.error?.description || "Razorpay payment failed"
+            )
+          )
+        })
+        rzp.open()
+      })
+
+      // Payment completed and session data updated — place the order
+      await placeOrder()
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : String(err))
+      setSubmitting(false)
+    }
+  }
+
+  return (
+    <>
+      <Button
+        disabled={notReady}
+        isLoading={submitting}
+        onClick={handlePayment}
+        size="large"
+        data-testid={dataTestId}
+      >
+        Place order
+      </Button>
+      <ErrorMessage
+        error={errorMessage}
+        data-testid="razorpay-payment-error-message"
+      />
+    </>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Stripe payment button (unchanged)-- Not used for But retained for future expansion
+// ---------------------------------------------------------------------------
 const StripePaymentButton = ({
   cart,
   notReady,
@@ -151,7 +308,16 @@ const StripePaymentButton = ({
   )
 }
 
-const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
+// ---------------------------------------------------------------------------
+// Manual test payment button (unchanged)
+// ---------------------------------------------------------------------------
+const ManualTestPaymentButton = ({
+  notReady,
+  "data-testid": dataTestId,
+}: {
+  notReady: boolean
+  "data-testid"?: string
+}) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
@@ -167,7 +333,6 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
 
   const handlePayment = () => {
     setSubmitting(true)
-
     onPaymentCompleted()
   }
 
@@ -178,7 +343,7 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
         isLoading={submitting}
         onClick={handlePayment}
         size="large"
-        data-testid="submit-order-button"
+        data-testid={dataTestId || "submit-order-button"}
       >
         Place order
       </Button>

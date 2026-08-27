@@ -12,9 +12,10 @@ export const listCartPaymentMethods = async (regionId: string) => {
   const next = {
     ...(await getCacheOptions("payment_providers")),
   }
-
+      console.log("aaaaaaaaaaa::" + regionId);
+        
   return sdk.client
-    .fetch<HttpTypes.StorePaymentProviderListResponse>(
+    .fetch<HttpTypes.StorePaymentProviderListResponse>(//ngrj cr 
       `/store/payment-providers`,
       {
         method: "GET",
@@ -26,10 +27,15 @@ export const listCartPaymentMethods = async (regionId: string) => {
     )
     .then(({ payment_providers }) =>
       payment_providers.sort((a, b) => {
+        console.log("hereeese"); 
         return a.id > b.id ? 1 : -1
+
+       
+
       })
     )
     .catch(() => {
+      console.log("error")
       return null
     })
 }
