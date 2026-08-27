@@ -1,0 +1,1204 @@
+[
+  {
+    "id": "1786637653256",
+    "name": "ecom-backend-full-tests",
+    "folders": [
+      {
+        "id": "1786637653255dx91",
+        "name": "Auth",
+        "requests": [
+          {
+            "id": "17866376532554e4b",
+            "name": "Admin Login",
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/user/emailpass",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637653255o8o5",
+            "name": "Customer Login",
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/customer/emailpass",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "17866376532551lq1",
+        "name": "Store - Products",
+        "requests": [
+          {
+            "id": "1786637653255vpzn",
+            "name": "List Products",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/products",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637653255y1z7",
+            "name": "Get Product by ID",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/products/{{productId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "17866376532553fs6",
+            "name": "List Products by Collection",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/products?collection_id={{collectionId}}",
+            "params": [
+              {
+                "key": "collection_id",
+                "value": "{{collectionId}}",
+                "enabled": true
+              }
+            ],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "17866376532565dog",
+        "name": "Store - Collections",
+        "requests": [
+          {
+            "id": "1786637653255c3d5",
+            "name": "List Collections",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/collections",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637653256tzud",
+            "name": "Get Collection by ID",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/collections/{{collectionId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637653256asv3",
+            "name": "Get Collection by Handle",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/collections?handle=summer",
+            "params": [
+              {
+                "key": "handle",
+                "value": "summer",
+                "enabled": true
+              }
+            ],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "1786637653256xeqs",
+        "name": "Store - Carts",
+        "requests": [
+          {
+            "id": "1786637653256szjn",
+            "name": "Create Cart",
+            "method": "POST",
+            "url": "{{baseUrl}}/store/carts",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"region_id\": \"{{regionId}}\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "17866376532561mq7",
+            "name": "Get Cart by ID",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/carts/{{cartId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637653256p634",
+            "name": "Update Cart",
+            "method": "POST",
+            "url": "{{baseUrl}}/store/carts/{{cartId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"email\": \"customer@example.com\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637653256ibyu",
+            "name": "Add Line Item",
+            "method": "POST",
+            "url": "{{baseUrl}}/store/carts/{{cartId}}/line-items",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"variant_id\": \"variant_123\",\n  \"quantity\": 1\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "1786637653256bslr",
+        "name": "Store - Customers",
+        "requests": [
+          {
+            "id": "1786637653256j6h6",
+            "name": "Get Current Customer",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/customers/me",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerToken}}",
+                "enabled": true
+              },
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "1786637653256vyb2",
+        "name": "Admin - Products",
+        "requests": [
+          {
+            "id": "1786637653256tz8r",
+            "name": "List Admin Products",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/products",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637653256imhb",
+            "name": "Create Product",
+            "method": "POST",
+            "url": "{{baseUrl}}/admin/products",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"title\": \"New Product\",\n  \"handle\": \"new-product\",\n  \"description\": \"Example product\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "17866376532562kd4",
+            "name": "Get Admin Product by ID",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/products/{{productId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "17866376532561hml",
+            "name": "Update Product",
+            "method": "POST",
+            "url": "{{baseUrl}}/admin/products/{{productId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"title\": \"Updated Product\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "1786637653256jy0l",
+        "name": "Admin - Collections",
+        "requests": [
+          {
+            "id": "17866376532566v5p",
+            "name": "List Admin Collections",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/collections",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637653256xlwh",
+            "name": "Get Admin Collection by ID",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/collections/{{collectionId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "1786637653256vs96",
+        "name": "Admin - Customers",
+        "requests": [
+          {
+            "id": "1786637653256vudk",
+            "name": "List Customers",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/customers",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "1786637653256212d",
+        "name": "Custom",
+        "requests": [
+          {
+            "id": "1786637653256zcuq",
+            "name": "Admin Custom GET",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/custom",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "17866376532566cy2",
+            "name": "Store Custom GET",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/custom",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      }
+    ],
+    "variables": [
+      {
+        "key": "baseUrl",
+        "value": "http://localhost:9000",
+        "enabled": true
+      },
+      {
+        "key": "publishableApiKey",
+        "value": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+        "enabled": true
+      },
+      {
+        "key": "adminToken",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "customerToken",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "productId",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "collectionId",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "cartId",
+        "value": "1",
+        "enabled": true
+      },
+      {
+        "key": "regionId",
+        "value": "",
+        "enabled": true
+      }
+    ],
+    "requests": []
+  },
+  {
+    "id": "1786637681487",
+    "name": "ecom-backend-full-tests",
+    "folders": [
+      {
+        "id": "1786637681487bayn",
+        "name": "Auth",
+        "requests": [
+          {
+            "id": "1786637681487fzlu",
+            "name": "Admin Login",
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/user/emailpass",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637681487jycd",
+            "name": "Customer Login",
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/customer/emailpass",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "1786637681487sadf",
+        "name": "Store - Products",
+        "requests": [
+          {
+            "id": "17866376814873bo6",
+            "name": "List Products",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/products",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637681487x0vv",
+            "name": "Get Product by ID",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/products/{{productId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637681487uwnx",
+            "name": "List Products by Collection",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/products?collection_id={{collectionId}}",
+            "params": [
+              {
+                "key": "collection_id",
+                "value": "{{collectionId}}",
+                "enabled": true
+              }
+            ],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "17866376814876xux",
+        "name": "Store - Collections",
+        "requests": [
+          {
+            "id": "1786637681487ev44",
+            "name": "List Collections",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/collections",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637681487skh6",
+            "name": "Get Collection by ID",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/collections/{{collectionId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "17866376814879kzm",
+            "name": "Get Collection by Handle",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/collections?handle=summer",
+            "params": [
+              {
+                "key": "handle",
+                "value": "summer",
+                "enabled": true
+              }
+            ],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "1786637681487hqxr",
+        "name": "Store - Carts",
+        "requests": [
+          {
+            "id": "1786637681487h6co",
+            "name": "Create Cart",
+            "method": "POST",
+            "url": "{{baseUrl}}/store/carts",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"region_id\": \"{{regionId}}\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "178663768148769sg",
+            "name": "Get Cart by ID",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/carts/{{cartId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637681487ae7x",
+            "name": "Update Cart",
+            "method": "POST",
+            "url": "{{baseUrl}}/store/carts/{{cartId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"email\": \"customer@example.com\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637681487pe9k",
+            "name": "Add Line Item",
+            "method": "POST",
+            "url": "{{baseUrl}}/store/carts/{{cartId}}/line-items",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"variant_id\": \"variant_123\",\n  \"quantity\": 1\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "17866376814874i9k",
+        "name": "Store - Customers",
+        "requests": [
+          {
+            "id": "1786637681487z04o",
+            "name": "Get Current Customer",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/customers/me",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerToken}}",
+                "enabled": true
+              },
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "1786637681487qu4e",
+        "name": "Admin - Products",
+        "requests": [
+          {
+            "id": "1786637681487jaia",
+            "name": "List Admin Products",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/products",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637681487slrb",
+            "name": "Create Product",
+            "method": "POST",
+            "url": "{{baseUrl}}/admin/products",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"title\": \"New Product\",\n  \"handle\": \"new-product\",\n  \"description\": \"Example product\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "17866376814871d2q",
+            "name": "Get Admin Product by ID",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/products/{{productId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "17866376814878bgp",
+            "name": "Update Product",
+            "method": "POST",
+            "url": "{{baseUrl}}/admin/products/{{productId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "raw",
+              "raw": "{\n  \"title\": \"Updated Product\"\n}"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "1786637681487x6ya",
+        "name": "Admin - Collections",
+        "requests": [
+          {
+            "id": "1786637681487pefk",
+            "name": "List Admin Collections",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/collections",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637681487wx9l",
+            "name": "Get Admin Collection by ID",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/collections/{{collectionId}}",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "17866376814875q49",
+        "name": "Admin - Customers",
+        "requests": [
+          {
+            "id": "1786637681487fkgv",
+            "name": "List Customers",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/customers",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      },
+      {
+        "id": "17866376814873zio",
+        "name": "Custom",
+        "requests": [
+          {
+            "id": "1786637681487zok1",
+            "name": "Admin Custom GET",
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/custom",
+            "params": [],
+            "headers": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          },
+          {
+            "id": "1786637681487v1wc",
+            "name": "Store Custom GET",
+            "method": "GET",
+            "url": "{{baseUrl}}/store/custom",
+            "params": [],
+            "headers": [
+              {
+                "key": "x-publishable-api-key",
+                "value": "{{publishableApiKey}}",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "type": "none"
+            },
+            "auth": {
+              "type": "none"
+            }
+          }
+        ],
+        "folders": []
+      }
+    ],
+    "variables": [
+      {
+        "key": "baseUrl",
+        "value": "http://localhost:9000",
+        "enabled": true
+      },
+      {
+        "key": "publishableApiKey",
+        "value": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+        "enabled": true
+      },
+      {
+        "key": "adminToken",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "customerToken",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "productId",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "collectionId",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "cartId",
+        "value": "",
+        "enabled": true
+      },
+      {
+        "key": "regionId",
+        "value": "",
+        "enabled": true
+      }
+    ],
+    "requests": []
+  }
+]

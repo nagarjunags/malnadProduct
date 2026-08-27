@@ -1,0 +1,591 @@
+import Razorpay from "razorpay"
+import crypto from "crypto"
+import { AbstractPaymentProvider } from "@medusajs/framework/utils"
+import {
+  AuthorizePaymentInput,
+  AuthorizePaymentOutput,
+  CancelPaymentInput,
+  CancelPaymentOutput,
+  CapturePaymentInput,
+  CapturePaymentOutput,
+  DeletePaymentInput,
+  DeletePaymentOutput,
+  GetPaymentStatusInput,
+  GetPaymentStatusOutput,
+  InitiatePaymentInput,
+  InitiatePaymentOutput,
+  ProviderWebhookPayload,
+  RefundPaymentInput,
+  RefundPaymentOutput,
+  RetrievePaymentInput,
+  RetrievePaymentOutput,
+  UpdatePaymentInput,
+  UpdatePaymentOutput,
+  WebhookActionResult,
+} from "@medusajs/framework/types"
+import { BigNumber, MedusaError, Modules } from "@medusajs/framework/utils"
+
+type RazorpayOptions = {
+  key_id?: string
+  key_secret?: string
+  currency?: string
+  webhook_secret?: string
+}
+
+type RazorpayPaymentData = Record<string, unknown> & {
+  id?: string
+  razorpay_order_id?: string
+  razorpay_payment_id?: string
+  razorpay_signature?: string
+  amount?: number
+  currency?: string
+  webhook_processed?: boolean
+}
+
+const hasPaymentResponse = (
+  data: RazorpayPaymentData
+): data is RazorpayPaymentData & {
+  razorpay_order_id: string
+  razorpay_payment_id: string
+  razorpay_signature: string
+} =>
+  typeof data.razorpay_order_id === "string" &&
+  typeof data.razorpay_payment_id === "string" &&
+  typeof data.razorpay_signature === "string"
+
+class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
+  static identifier = "razorpay"
+
+  private client?: Razorpay
+
+  constructor(
+    container: Record<string, unknown>,
+    options: RazorpayOptions
+  ) {
+    super(container, options)
+
+    // Client is only initialised when keys are present.
+    // If keys are missing, payment operations will throw at request time.
+    if (options?.key_id && options?.key_secret) {
+      this.client = new Razorpay({
+        key_id: options.key_id,
+        key_secret: options.key_secret,
+      })
+    }
+  }
+
+  static validateOptions(_options: Record<string, any>) {
+    // Keys are validated lazily at request time so the module loads even when
+    // env vars are not yet set (e.g. local dev without Razorpay credentials).
+  }
+
+  private getClient(): Razorpay {
+    if (!this.client || !this.config.key_secret) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Razorpay is not configured. Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET."
+      )
+    }
+
+    return this.client
+  }
+
+  private getSmallestUnitAmount(amount: unknown, currency: string): number {
+    const fractionDigits = new Intl.NumberFormat("en", {
+      style: "currency",
+      currency,
+    }).resolvedOptions().maximumFractionDigits
+
+    return Math.round(Number(amount) * 10 ** fractionDigits)
+  }
+
+  private hasValidSignature(
+    orderId: string,
+    paymentId: string,
+    signature: string
+  ): boolean {
+    const expectedSignature = crypto
+      .createHmac("sha256", this.config.key_secret!)
+      .update(`${orderId}|${paymentId}`)
+      .digest("hex")
+
+    const expected = Buffer.from(expectedSignature, "utf8")
+    const received = Buffer.from(signature, "utf8")
+
+    return (
+      expected.length === received.length &&
+      crypto.timingSafeEqual(expected, received)
+    )
+  }
+
+  private async verifyPaymentResponse(
+    data: RazorpayPaymentData,
+    expectedAmount: unknown,
+    expectedCurrency: string,
+    amountAlreadyInSmallestUnit: boolean = false
+  ): Promise<"authorized" | "captured"> {
+    if (!hasPaymentResponse(data)) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Razorpay payment response is incomplete."
+      )
+    }
+
+    const expectedOrderId = data.id || data.razorpay_order_id
+    if (expectedOrderId !== data.razorpay_order_id) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Razorpay payment does not belong to this payment session."
+      )
+    }
+
+    // Skip signature verification for webhook-processed payments
+    if (!data.webhook_processed && 
+      !this.hasValidSignature(
+        data.razorpay_order_id,
+        data.razorpay_payment_id,
+        data.razorpay_signature
+      )
+    ) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Invalid Razorpay payment signature."
+      )
+    }
+
+    const payment = await this.getClient().payments.fetch(
+      data.razorpay_payment_id
+    )
+    const currency = expectedCurrency.toUpperCase()
+    
+    // Convert to smallest unit only if not already converted
+    // During initiatePayment/updatePayment: amount is in standard units (₹85) - convert to paise (8500)
+    // During authorizePayment: amount is already in paise from data.amount (8500) - use as-is
+    const amount = amountAlreadyInSmallestUnit 
+      ? Number(expectedAmount)
+      : this.getSmallestUnitAmount(expectedAmount, currency)
+
+    if (payment.order_id !== data.razorpay_order_id) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Razorpay payment details do not match this payment (Order ID)."
+      )
+    }
+
+    if (Number(payment.amount) !== amount) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        `Razorpay payment details do not match this payment session (amount). Expected: ${amount}, Got: ${payment.amount}`
+      )
+    }
+
+    if (payment.currency.toUpperCase() !== currency) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Razorpay payment details do not match this payment session (currency)."
+      )
+    }
+
+    if (payment.status === "captured") {
+      return "captured"
+    }
+
+    if (payment.status === "authorized") {
+      return "authorized"
+    }
+
+    throw new MedusaError(
+      MedusaError.Types.NOT_ALLOWED,
+      `Razorpay payment is ${payment.status}, not authorized.`
+    )
+  }
+
+  /**
+   * Called when the customer selects Razorpay at checkout.
+   * Creates a Razorpay order and stores the order details in the session data.
+   */
+  async initiatePayment(
+    input: InitiatePaymentInput
+  ): Promise<InitiatePaymentOutput> {
+    const { amount, currency_code, context } = input
+    const data = (input.data || {}) as RazorpayPaymentData
+    const currency = (currency_code || this.config.currency || "INR").toUpperCase()
+
+    if (hasPaymentResponse(data)) {
+      // If payment data exists, verify it
+      // data.amount here is from Razorpay (in paise), so pass the flag
+      const status = await this.verifyPaymentResponse(
+        data, 
+        data.amount, 
+        currency,
+        true // data.amount is already in smallest unit from Razorpay
+      )
+
+      return {
+        id: data.razorpay_order_id,
+        status,
+        data: {
+          ...data,
+          id: data.razorpay_order_id,
+          key_id: this.config.key_id,
+        },
+      }
+    }
+
+    // Razorpay expects amount in the smallest currency unit (paise for INR)
+    // Input amount is in standard units (₹85), convert to paise (8500)
+    const razorpayAmount = this.getSmallestUnitAmount(amount, currency)
+    const sessionId =
+      data.session_id ||
+      (context as Record<string, unknown> | undefined)?.id ||
+      Date.now().toString()
+
+    try {
+      const order = await this.getClient().orders.create({
+        amount: razorpayAmount,
+        [Modules.CURRENCY]: currency,
+        receipt: `rcpt_${sessionId}`.slice(0, 40),
+        payment_capture: true,
+        notes: {
+          session_id: sessionId,
+        },
+      })
+
+      return {
+        id: order.id,
+        data: {
+          id: order.id,
+          razorpay_order_id: order.id,
+          amount: order.amount, // This is in paise
+          currency: order.currency,
+          receipt: order.receipt,
+          status: order.status,
+          key_id: this.config.key_id,
+        },
+      }
+    } catch (err: any) {
+      throw new MedusaError(
+        MedusaError.Types.UNEXPECTED_STATE,
+        `Failed to create Razorpay order: ${err?.message || err}`
+      )
+    }
+  }
+
+  /**
+   * Called during cart completion to authorize the payment.
+   * Verifies the HMAC signature from Razorpay to confirm payment authenticity.
+   * 
+   * IMPORTANT: AuthorizePaymentInput does NOT include an amount field in Medusa v2.
+   * The amount stored in data.amount is already in Razorpay's smallest unit (paise for INR).
+   * We must NOT convert it again during verification.
+   */
+  async authorizePayment(
+    input: AuthorizePaymentInput
+  ): Promise<AuthorizePaymentOutput> {
+    const data = (input.data || {}) as RazorpayPaymentData
+
+    // If we have signature data (client has completed payment), verify it
+    if (hasPaymentResponse(data)) {
+      const currency = String(data.currency || this.config.currency || "INR")
+
+      try {
+        // data.amount is already in smallest unit (paise) from Razorpay
+        // Pass it directly to verification without conversion
+        const status = await this.verifyPaymentResponse(
+          data,
+          data.amount, // Already in paise - no conversion needed
+          currency,
+          true // Flag indicating amount is already in smallest unit
+        )
+
+        return {
+          status,
+          data: {
+            ...data,
+            id: data.razorpay_payment_id,
+          },
+        }
+      } catch (error) {
+        return {
+          status: "error",
+          data: {
+            ...data,
+            error: error instanceof Error ? error.message : String(error),
+          },
+        }
+      }
+    }
+
+    // No payment data yet — payment is pending (customer has not paid yet)
+    return {
+      status: "pending",
+      data,
+    }
+  }
+
+  /**
+   * Called when admin captures the payment or auto-capture fires.
+   */
+  async capturePayment(
+    input: CapturePaymentInput
+  ): Promise<CapturePaymentOutput> {
+    const data = input.data as Record<string, any>
+    const paymentId = data?.razorpay_payment_id || data?.id
+
+    if (!paymentId) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "razorpay_payment_id is required to capture payment"
+      )
+    }
+
+    try {
+      // Fetch the payment to get the amount — required by Razorpay capture API
+      const payment = await this.getClient().payments.fetch(paymentId)
+
+      if (payment.status === "captured") {
+        return { data: { ...data, status: "captured" } }
+      }
+
+      await this.getClient().payments.capture(
+        paymentId,
+        payment.amount as number,
+        payment.currency
+      )
+
+      return {
+        data: {
+          ...data,
+          id: paymentId,
+          status: "captured",
+        },
+      }
+    } catch (err: any) {
+      throw new MedusaError(
+        MedusaError.Types.UNEXPECTED_STATE,
+        `Failed to capture Razorpay payment: ${err?.message || err}`
+      )
+    }
+  }
+
+  /**
+   * Called when admin refunds a payment.
+   */
+  async refundPayment(
+    input: RefundPaymentInput
+  ): Promise<RefundPaymentOutput> {
+    const data = input.data as Record<string, any>
+    const paymentId = data?.razorpay_payment_id || data?.id
+    const refundAmount =
+      input.amount === undefined
+        ? undefined
+        : this.getSmallestUnitAmount(
+            input.amount,
+            String(data.currency || this.config.currency || "INR")
+          )
+
+    if (!paymentId) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "razorpay_payment_id is required to refund payment"
+      )
+    }
+
+    try {
+      const refundBody: Record<string, any> = { speed: "normal" }
+      if (refundAmount !== undefined) {
+        refundBody.amount = refundAmount
+      }
+
+      const refund = await this.getClient().payments.refund(paymentId, refundBody)
+
+      return {
+        data: {
+          ...data,
+          refund_id: refund.id,
+          refund_status: refund.status,
+        },
+      }
+    } catch (err: any) {
+      throw new MedusaError(
+        MedusaError.Types.UNEXPECTED_STATE,
+        `Failed to refund Razorpay payment: ${err?.message || err}`
+      )
+    }
+  }
+
+  /**
+   * Called when an order is cancelled before payment is captured.
+   */
+  async cancelPayment(
+    input: CancelPaymentInput
+  ): Promise<CancelPaymentOutput> {
+    // Razorpay orders cannot be explicitly cancelled via API
+    // Authorized-but-not-captured payments are auto-refunded by Razorpay
+    return { data: input.data as Record<string, any> }
+  }
+
+  /**
+   * Called when customer switches away from Razorpay to another payment method.
+   */
+  async deletePayment(
+    input: DeletePaymentInput
+  ): Promise<DeletePaymentOutput> {
+    return { data: input.data as Record<string, any> }
+  }
+
+  /**
+   * Retrieves payment data from Razorpay.
+   */
+  async retrievePayment(
+    input: RetrievePaymentInput
+  ): Promise<RetrievePaymentOutput> {
+    const data = input.data as Record<string, any>
+    const paymentId = data?.razorpay_payment_id || data?.id
+
+    if (!paymentId) {
+      return { data }
+    }
+
+    try {
+      const payment = await this.getClient().payments.fetch(paymentId)
+      return { data: { ...data, ...payment } }
+    } catch {
+      return { data }
+    }
+  }
+
+  /**
+   * Updates the Razorpay order when cart amount or currency changes.
+   */
+  async updatePayment(
+    input: UpdatePaymentInput
+  ): Promise<UpdatePaymentOutput> {
+    const data = (input.data || {}) as RazorpayPaymentData
+
+    if (hasPaymentResponse(data)) {
+      // If payment is already processed, verify with the Razorpay amount (in paise)
+      await this.verifyPaymentResponse(
+        data, 
+        data.amount, 
+        input.currency_code,
+        true // data.amount is already in smallest unit from Razorpay
+      )
+
+      return { data }
+    }
+
+    // Razorpay orders cannot be updated once created — create a new one
+    return this.initiatePayment(input as unknown as InitiatePaymentInput)
+  }
+
+  /**
+   * Returns the status of the payment session based on data stored.
+   */
+  async getPaymentStatus(
+    input: GetPaymentStatusInput
+  ): Promise<GetPaymentStatusOutput> {
+    const data = input.data as Record<string, any>
+
+    if (!data?.razorpay_payment_id) {
+      return { status: "pending" }
+    }
+
+    try {
+      const payment = await this.getClient().payments.fetch(
+        data.razorpay_payment_id
+      )
+
+      switch (payment.status) {
+        case "captured":
+          return { status: "captured" }
+        case "authorized":
+          return { status: "authorized" }
+        case "failed":
+          return { status: "error" }
+        case "refunded":
+          return { status: "canceled" }
+        default:
+          return { status: "pending" }
+      }
+    } catch {
+      return { status: "pending" }
+    }
+  }
+
+  /**
+   * Handles Razorpay webhook events (payment.captured, payment.failed, etc.)
+   * FIXED: Now extracts complete payment data for session updates
+   */
+  async getWebhookActionAndData(
+    payload: ProviderWebhookPayload["payload"]
+  ): Promise<WebhookActionResult> {
+    const { data, rawData, headers } = payload
+
+    // Verify webhook signature if secret is configured
+    if (this.config.webhook_secret && rawData) {
+      const razorpaySignature = (headers as Record<string, string>)?.["x-razorpay-signature"]
+      if (razorpaySignature) {
+        const expectedSignature = crypto
+          .createHmac("sha256", this.config.webhook_secret)
+          .update(Buffer.isBuffer(rawData) ? rawData : rawData)
+          .digest("hex")
+
+        if (expectedSignature !== razorpaySignature) {
+          return {
+            action: "failed",
+            data: { session_id: "", amount: new BigNumber(0) },
+          }
+        }
+      }
+    }
+
+    const event = data as Record<string, any>
+    const eventType = event?.event
+
+    const paymentEntity = event?.payload?.payment?.entity
+    const sessionId = paymentEntity?.notes?.session_id || paymentEntity?.notes?.cart_id || ""
+    const amount = paymentEntity?.amount
+      ? new BigNumber(paymentEntity.amount / 100)
+      : new BigNumber(0)
+
+    // Extract payment response data from webhook for successful payments
+    const extractPaymentData = (paymentEntity: any) => {
+      if (!paymentEntity) {
+        return { session_id: sessionId, amount }
+      }
+
+      const paymentData = {
+        session_id: sessionId,
+        amount,
+        // Include complete payment response data for session updates
+        razorpay_payment_id: paymentEntity.id,
+        razorpay_order_id: paymentEntity.order_id,
+        // Generate signature for webhook-processed payments
+        razorpay_signature: `webhook_${paymentEntity.id}`,
+        // Additional payment details
+        status: paymentEntity.status,
+        method: paymentEntity.method,
+        currency: paymentEntity.currency,
+        // Mark this as webhook-processed to distinguish from frontend payments
+        webhook_processed: true,
+        webhook_event: eventType
+      }
+
+      return paymentData
+    }
+
+    switch (eventType) {
+      case "payment.captured":
+        return { action: "captured", data: extractPaymentData(paymentEntity) }
+      case "payment.authorized":
+        return { action: "authorized", data: extractPaymentData(paymentEntity) }
+      case "payment.failed":
+        return { action: "failed", data: extractPaymentData(paymentEntity) }
+      default:
+        return { action: "not_supported", data: { session_id: sessionId, amount } }
+    }
+  }
+}
+
+export default RazorpayProviderService

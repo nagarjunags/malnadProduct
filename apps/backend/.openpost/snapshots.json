@@ -485,5 +485,1881 @@
         ]
       }
     ]
+  },
+  {
+    "id": "1787149214314ci3yms5zgk5",
+    "name": "store paymentprovider 19/08/2026, 19:50:14",
+    "createdAt": 1787149214314,
+    "baseRequest": {
+      "id": "1787149214311",
+      "name": "store paymentprovider",
+      "method": "GET",
+      "url": "{{baseUrl}}/store/payment-providers?region_id=reg_01KZP734NM12BDFEFGJG35CZ81",
+      "params": [
+        {
+          "key": "region_id",
+          "value": "reg_01KZP734NM12BDFEFGJG35CZ81",
+          "enabled": true
+        }
+      ],
+      "headers": [
+        {
+          "key": "x-publishable-api-key",
+          "value": "{{publishableApiKey}}",
+          "enabled": true
+        },
+        {
+          "key": "region_id",
+          "value": "{{regionId}}",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "none"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "records": [
+      {
+        "id": "17871492290291n2r9v08gqj",
+        "timestamp": 1787149229029,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 0,
+          "statusText": "Error",
+          "headers": {},
+          "body": "Request failed: Failed to parse URL from /store/payment-providers",
+          "time": 4,
+          "size": 0,
+          "actualRequest": {
+            "method": "GET",
+            "url": "/store/payment-providers",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787149269408ltioi2cllg",
+        "timestamp": 1787149269408,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "164",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:21:09 GMT",
+            "etag": "W/\"a4-d6wjWbrWOQoFEHmtpwMHs0OV3Ks\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"type\":\"not_allowed\",\"message\":\"Publishable API key required in the request header: x-publishable-api-key. You can manage your keys in settings in the dashboard.\"}",
+          "time": 17,
+          "size": 164,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787149381405e7jsmqhsd05",
+        "timestamp": 1787149381405,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "82",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:23:01 GMT",
+            "etag": "W/\"52-GYJRBK0c2RTLytgwO/QiEpZuPBA\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"type\":\"invalid_data\",\"message\":\"Invalid request: Field 'region_id' is required\"}",
+          "time": 25,
+          "size": 82,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787149512893wuh8c3lywph",
+        "timestamp": 1787149512893,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "query",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "82",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:25:12 GMT",
+            "etag": "W/\"52-GYJRBK0c2RTLytgwO/QiEpZuPBA\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"type\":\"invalid_data\",\"message\":\"Invalid request: Field 'region_id' is required\"}",
+          "time": 11,
+          "size": 82,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "query": "DE"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787150277936dk5rspyw025",
+        "timestamp": 1787150277936,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "query",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "82",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:37:57 GMT",
+            "etag": "W/\"52-GYJRBK0c2RTLytgwO/QiEpZuPBA\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"type\":\"invalid_data\",\"message\":\"Invalid request: Field 'region_id' is required\"}",
+          "time": 21,
+          "size": 82,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "query": "reg_01KZP734NM12BDFEFGJG35CZ81"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787150308147y66r0kky1md",
+        "timestamp": 1787150308147,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "region_id",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "82",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:38:28 GMT",
+            "etag": "W/\"52-GYJRBK0c2RTLytgwO/QiEpZuPBA\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"type\":\"invalid_data\",\"message\":\"Invalid request: Field 'region_id' is required\"}",
+          "time": 9,
+          "size": 82,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "region_id": "reg_01KZP734NM12BDFEFGJG35CZ81"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787150314738x2q0twrf7ms",
+        "timestamp": 1787150314738,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "region_id",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "82",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:38:34 GMT",
+            "etag": "W/\"52-GYJRBK0c2RTLytgwO/QiEpZuPBA\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"type\":\"invalid_data\",\"message\":\"Invalid request: Field 'region_id' is required\"}",
+          "time": 14,
+          "size": 82,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "region_id": "reg_01KZP734NM12BDFEFGJG35CZ81"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "17871507460818h8d2mth5d8",
+        "timestamp": 1787150746081,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "region_id",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "82",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:45:46 GMT",
+            "etag": "W/\"52-GYJRBK0c2RTLytgwO/QiEpZuPBA\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"type\":\"invalid_data\",\"message\":\"Invalid request: Field 'region_id' is required\"}",
+          "time": 11,
+          "size": 82,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "region_id": "reg_01KZP734NM12BDFEFGJG35CZ81"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787150751508sqiev0j7ev",
+        "timestamp": 1787150751508,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "region_id",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "82",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:45:51 GMT",
+            "etag": "W/\"52-GYJRBK0c2RTLytgwO/QiEpZuPBA\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"type\":\"invalid_data\",\"message\":\"Invalid request: Field 'region_id' is required\"}",
+          "time": 18,
+          "size": 82,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "region_id": "reg_01KZP734NM12BDFEFGJG35CZ81"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787150774856nyjm6xag5z",
+        "timestamp": 1787150774856,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "region_id",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "82",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:46:14 GMT",
+            "etag": "W/\"52-GYJRBK0c2RTLytgwO/QiEpZuPBA\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"type\":\"invalid_data\",\"message\":\"Invalid request: Field 'region_id' is required\"}",
+          "time": 14,
+          "size": 82,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "region_id": "reg_01KZP734NM12BDFEFGJG35CZ81"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787151017433oagvamgy2cj",
+        "timestamp": 1787151017433,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers",
+          "params": [],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "region_id",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 400,
+          "statusText": "Bad Request",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "82",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:50:17 GMT",
+            "etag": "W/\"52-GYJRBK0c2RTLytgwO/QiEpZuPBA\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"type\":\"invalid_data\",\"message\":\"Invalid request: Field 'region_id' is required\"}",
+          "time": 22,
+          "size": 82,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "region_id": "reg_01KZP734NM12BDFEFGJG35CZ81"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787151104981xhz5jz4tmam",
+        "timestamp": 1787151104981,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers?region_id=reg_01KZP734NM12BDFEFGJG35CZ81",
+          "params": [
+            {
+              "key": "region_id",
+              "value": "reg_01KZP734NM12BDFEFGJG35CZ81",
+              "enabled": true
+            }
+          ],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "region_id",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "100",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 19 Aug 2026 14:51:44 GMT",
+            "etag": "W/\"64-2L8RmJdsJGgVoVHAByGcOtGlAi0\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"payment_providers\":[{\"id\":\"pp_system_default\",\"is_enabled\":true}],\"count\":1,\"offset\":0,\"limit\":20}",
+          "time": 23,
+          "size": 100,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers?region_id=reg_01KZP734NM12BDFEFGJG35CZ81",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "region_id": "reg_01KZP734NM12BDFEFGJG35CZ81"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787218197502d3wnpvkgic",
+        "timestamp": 1787218197502,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers?region_id=reg_01KZP734NM12BDFEFGJG35CZ81",
+          "params": [
+            {
+              "key": "region_id",
+              "value": "reg_01KZP734NM12BDFEFGJG35CZ81",
+              "enabled": true
+            }
+          ],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "region_id",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "100",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Thu, 20 Aug 2026 09:29:57 GMT",
+            "etag": "W/\"64-2L8RmJdsJGgVoVHAByGcOtGlAi0\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"payment_providers\":[{\"id\":\"pp_system_default\",\"is_enabled\":true}],\"count\":1,\"offset\":0,\"limit\":20}",
+          "time": 43,
+          "size": 100,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers?region_id=reg_01KZP734NM12BDFEFGJG35CZ81",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "region_id": "reg_01KZP734NM12BDFEFGJG35CZ81"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "17872189505487eudbl3gf49",
+        "timestamp": 1787218950548,
+        "request": {
+          "id": "1787149214311",
+          "name": "store paymentprovider",
+          "method": "GET",
+          "url": "{{baseUrl}}/store/payment-providers?region_id=reg_01KZP734NM12BDFEFGJG35CZ81",
+          "params": [
+            {
+              "key": "region_id",
+              "value": "reg_01KZP734NM12BDFEFGJG35CZ81",
+              "enabled": true
+            }
+          ],
+          "headers": [
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "region_id",
+              "value": "{{regionId}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "148",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Thu, 20 Aug 2026 09:42:30 GMT",
+            "etag": "W/\"94-vivewHAhWVFD6mfUoaWFJDgU704\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"payment_providers\":[{\"id\":\"pp_razorpay_razorpay\",\"is_enabled\":true},{\"id\":\"pp_system_default\",\"is_enabled\":true}],\"count\":2,\"offset\":0,\"limit\":20}",
+          "time": 19,
+          "size": 148,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/store/payment-providers?region_id=reg_01KZP734NM12BDFEFGJG35CZ81",
+            "headers": {
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "region_id": "reg_01KZP734NM12BDFEFGJG35CZ81"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      }
+    ],
+    "responseContracts": [
+      {
+        "status": 200,
+        "latestVariantId": "17872182004507r5aqb2mi4i",
+        "variants": [
+          {
+            "id": "17872182004507r5aqb2mi4i",
+            "signature": "json:{count:number,limit:number,offset:number,payment_providers:array<{id:string,is_enabled:boolean}>}",
+            "summary": "{count:number,limit:number,offset:number,payment_providers:array<{id:string,is_enabled:boolean}>}",
+            "sampleBody": "{\"payment_providers\":[{\"id\":\"pp_razorpay_razorpay\",\"is_enabled\":true},{\"id\":\"pp_system_default\",\"is_enabled\":true}],\"count\":2,\"offset\":0,\"limit\":20}",
+            "contentType": "application/json; charset=utf-8",
+            "firstSeen": 1787218197502,
+            "lastSeen": 1787218950548,
+            "occurrences": 2,
+            "history": [
+              {
+                "timestamp": 1787218197502,
+                "recordId": "1787218197502d3wnpvkgic"
+              },
+              {
+                "timestamp": 1787218950548,
+                "recordId": "17872189505487eudbl3gf49"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1787735865626dmaujmd53dk",
+    "name": "test 26/08/2026, 14:47:45",
+    "createdAt": 1787735865626,
+    "baseRequest": {
+      "id": "1787735865621",
+      "name": "test",
+      "method": "GET",
+      "url": "{{baseUrl}}/admin/custom/",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "x-publishable-api-key",
+          "value": "{{publishableApiKey}}",
+          "enabled": true
+        },
+        {
+          "key": "Authorization",
+          "value": "Bearer  {{adminToken}}",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "none"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "records": [
+      {
+        "id": "1787735911254w7tsdnjhxkn",
+        "timestamp": 1787735911254,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/custom",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "145",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:18:31 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /custom</pre>\n</body>\n</html>\n",
+          "time": 31,
+          "size": 145,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/custom",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "17877360138280i4may9vyg1m",
+        "timestamp": 1787736013828,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/custom",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "145",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:20:13 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /custom</pre>\n</body>\n</html>\n",
+          "time": 20,
+          "size": 145,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/custom",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787736049517m9m83j1nibi",
+        "timestamp": 1787736049517,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/api/custom",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "149",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:20:49 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/custom</pre>\n</body>\n</html>\n",
+          "time": 8,
+          "size": 149,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/api/custom",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787736058152srxebyxlvp9",
+        "timestamp": 1787736058152,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/api/custom",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "149",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:20:58 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/custom</pre>\n</body>\n</html>\n",
+          "time": 10,
+          "size": 149,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/api/custom",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787736110023sdzeqpzb5l",
+        "timestamp": 1787736110023,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/api/custom",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "149",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:21:50 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/custom</pre>\n</body>\n</html>\n",
+          "time": 31,
+          "size": 149,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/api/custom",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787736118509sy937wy9kof",
+        "timestamp": 1787736118509,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/api/custom/",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "150",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:21:58 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/custom/</pre>\n</body>\n</html>\n",
+          "time": 20,
+          "size": 150,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/api/custom/",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787736145223tpnxn1axjnc",
+        "timestamp": 1787736145223,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/api/custom/",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "150",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:22:25 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/custom/</pre>\n</body>\n</html>\n",
+          "time": 10,
+          "size": 150,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/api/custom/",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787736165205e4wja8b3axf",
+        "timestamp": 1787736165205,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/api/custom/",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "150",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:22:45 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/custom/</pre>\n</body>\n</html>\n",
+          "time": 8,
+          "size": 150,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/api/custom/",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787736184861i9as6r39rx",
+        "timestamp": 1787736184861,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/api/custom/",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "150",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:23:04 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/custom/</pre>\n</body>\n</html>\n",
+          "time": 25,
+          "size": 150,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/api/custom/",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787736216207pek0uodlv2r",
+        "timestamp": 1787736216207,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/api/admin/custom/",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "156",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:23:36 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/custom/</pre>\n</body>\n</html>\n",
+          "time": 15,
+          "size": 156,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/api/admin/custom/",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787737385401oaf0xij8d3",
+        "timestamp": 1787737385401,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/api/admin/custom/",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "156",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:43:05 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/custom/</pre>\n</body>\n</html>\n",
+          "time": 31,
+          "size": 156,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/api/admin/custom/",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "17877374238341t1qjd1vgxuj",
+        "timestamp": 1787737423834,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/api/admin/custom/",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 404,
+          "statusText": "Not Found",
+          "headers": {
+            "connection": "keep-alive",
+            "content-length": "156",
+            "content-security-policy": "default-src 'none'",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:43:43 GMT",
+            "keep-alive": "timeout=5",
+            "x-content-type-options": "nosniff",
+            "x-powered-by": "Express"
+          },
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/custom/</pre>\n</body>\n</html>\n",
+          "time": 15,
+          "size": 156,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/api/admin/custom/",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "17877374562771bix0x1pop6",
+        "timestamp": 1787737456277,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/custom/",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 401,
+          "statusText": "Unauthorized",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "26",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:44:16 GMT",
+            "etag": "W/\"1a-pljHtlo127JYJR4E/RYOPb6ucbw\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "{\"message\":\"Unauthorized\"}",
+          "time": 11,
+          "size": 26,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/admin/custom/",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787737756680imnacdcpdc",
+        "timestamp": 1787737756680,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/custom/",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer  {{adminToken}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "2",
+            "content-type": "text/plain; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:49:16 GMT",
+            "etag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "OK",
+          "time": 10,
+          "size": 2,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/admin/custom/",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "Authorization": "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rvcl9pZCI6InVzZXJfMDFLWlA3TldXTkQ5UVNNV0U0MEdLWlZEM1MiLCJhY3Rvcl90eXBlIjoidXNlciIsImF1dGhfaWRlbnRpdHlfaWQiOiJhdXRoaWRfMDFLWlA3TlgxMzlZRVBLOVM3RUJTNDdQOEciLCJhdXRoX3Byb3ZpZGVyIjoiZW1haWxwYXNzIiwiYXBwX21ldGFkYXRhIjp7InVzZXJfaWQiOiJ1c2VyXzAxS1pQN05XV05EOVFTTVdFNDBHS1pWRDNTIiwiY3VzdG9tZXJfaWQiOiJjdXNfMDFLWlA4Mk1TMkg0SjlaNTRaWDFTOUUwODQifSwidXNlcl9tZXRhZGF0YSI6e30sImlhdCI6MTc4NzczNzY0MSwiZXhwIjoxNzg3ODI0MDQxfQ.LWscTNM4Z7PRKJwnzAV1EVRVKNpfYlL2Ru4qhFicRAo"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      },
+      {
+        "id": "1787737801870q6t2dy49h",
+        "timestamp": 1787737801870,
+        "request": {
+          "id": "1787735865621",
+          "name": "test",
+          "method": "GET",
+          "url": "{{baseUrl}}/admin/custom/",
+          "params": [],
+          "headers": [
+            {
+              "key": "Accept",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "enabled": true
+            },
+            {
+              "key": "x-publishable-api-key",
+              "value": "{{publishableApiKey}}",
+              "enabled": true
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer  {{adminToken}}",
+              "enabled": true
+            }
+          ],
+          "body": {
+            "type": "none"
+          },
+          "auth": {
+            "type": "none"
+          },
+          "inheritAuth": true
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "headers": {
+            "access-control-allow-credentials": "true",
+            "connection": "keep-alive",
+            "content-length": "2",
+            "content-type": "text/plain; charset=utf-8",
+            "date": "Wed, 26 Aug 2026 09:50:01 GMT",
+            "etag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "keep-alive": "timeout=5",
+            "vary": "Origin",
+            "x-powered-by": "Express"
+          },
+          "body": "OK",
+          "time": 28,
+          "size": 2,
+          "actualRequest": {
+            "method": "GET",
+            "url": "http://localhost:9000/admin/custom/",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+              "x-publishable-api-key": "pk_86c89743e829108cfe6ec48cbedb46346ed2b0340efc08893dd8db9171e0efad",
+              "Authorization": "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rvcl9pZCI6InVzZXJfMDFLWlA3TldXTkQ5UVNNV0U0MEdLWlZEM1MiLCJhY3Rvcl90eXBlIjoidXNlciIsImF1dGhfaWRlbnRpdHlfaWQiOiJhdXRoaWRfMDFLWlA3TlgxMzlZRVBLOVM3RUJTNDdQOEciLCJhdXRoX3Byb3ZpZGVyIjoiZW1haWxwYXNzIiwiYXBwX21ldGFkYXRhIjp7InVzZXJfaWQiOiJ1c2VyXzAxS1pQN05XV05EOVFTTVdFNDBHS1pWRDNTIiwiY3VzdG9tZXJfaWQiOiJjdXNfMDFLWlA4Mk1TMkg0SjlaNTRaWDFTOUUwODQifSwidXNlcl9tZXRhZGF0YSI6e30sImlhdCI6MTc4NzczNzY0MSwiZXhwIjoxNzg3ODI0MDQxfQ.LWscTNM4Z7PRKJwnzAV1EVRVKNpfYlL2Ru4qhFicRAo"
+            },
+            "body": null,
+            "protocol": "HTTP/1.1",
+            "certificateNames": "System Trust Store"
+          },
+          "cookies": []
+        }
+      }
+    ],
+    "responseContracts": []
   }
 ]
