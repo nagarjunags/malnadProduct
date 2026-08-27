@@ -39,7 +39,6 @@ type RazorpayPaymentData = Record<string, unknown> & {
   razorpay_signature?: string
   amount?: number
   currency?: string
-  webhook_processed?: boolean
 }
 
 const hasPaymentResponse = (
@@ -121,8 +120,7 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
   private async verifyPaymentResponse(
     data: RazorpayPaymentData,
     expectedAmount: unknown,
-    expectedCurrency: string,
-    amountAlreadyInSmallestUnit: boolean = false
+    expectedCurrency: string
   ): Promise<"authorized" | "captured"> {
     if (!hasPaymentResponse(data)) {
       throw new MedusaError(
@@ -139,8 +137,7 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
       )
     }
 
-    // Skip signature verification for webhook-processed payments
-    if (!data.webhook_processed && 
+    if (
       !this.hasValidSignature(
         data.razorpay_order_id,
         data.razorpay_payment_id,
@@ -157,32 +154,16 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
       data.razorpay_payment_id
     )
     const currency = expectedCurrency.toUpperCase()
-    
-    // Convert to smallest unit only if not already converted
-    // During initiatePayment/updatePayment: amount is in standard units (₹85) - convert to paise (8500)
-    // During authorizePayment: amount is already in paise from data.amount (8500) - use as-is
-    const amount = amountAlreadyInSmallestUnit 
-      ? Number(expectedAmount)
-      : this.getSmallestUnitAmount(expectedAmount, currency)
+    const amount = this.getSmallestUnitAmount(expectedAmount, currency)
 
-    if (payment.order_id !== data.razorpay_order_id) {
+    if (
+      payment.order_id !== data.razorpay_order_id ||
+      Number(payment.amount) !== amount ||
+      payment.currency.toUpperCase() !== currency
+    ) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
-        "Razorpay payment details do not match this payment (Order ID)."
-      )
-    }
-
-    if (Number(payment.amount) !== amount) {
-      throw new MedusaError(
-        MedusaError.Types.INVALID_DATA,
-        `Razorpay payment details do not match this payment session (amount). Expected: ${amount}, Got: ${payment.amount}`
-      )
-    }
-
-    if (payment.currency.toUpperCase() !== currency) {
-      throw new MedusaError(
-        MedusaError.Types.INVALID_DATA,
-        "Razorpay payment details do not match this payment session (currency)."
+        "Razorpay payment details do not match this payment session."
       )
     }
 
@@ -212,14 +193,7 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
     const currency = (currency_code || this.config.currency || "INR").toUpperCase()
 
     if (hasPaymentResponse(data)) {
-      // If payment data exists, verify it
-      // data.amount here is from Razorpay (in paise), so pass the flag
-      const status = await this.verifyPaymentResponse(
-        data, 
-        data.amount, 
-        currency,
-        true // data.amount is already in smallest unit from Razorpay
-      )
+      const status = await this.verifyPaymentResponse(data, amount, currency)
 
       return {
         id: data.razorpay_order_id,
@@ -233,7 +207,6 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
     }
 
     // Razorpay expects amount in the smallest currency unit (paise for INR)
-    // Input amount is in standard units (₹85), convert to paise (8500)
     const razorpayAmount = this.getSmallestUnitAmount(amount, currency)
     const sessionId =
       data.session_id ||
@@ -256,7 +229,7 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
         data: {
           id: order.id,
           razorpay_order_id: order.id,
-          amount: order.amount, // This is in paise
+          amount: order.amount,
           currency: order.currency,
           receipt: order.receipt,
           status: order.status,
@@ -274,10 +247,6 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
   /**
    * Called during cart completion to authorize the payment.
    * Verifies the HMAC signature from Razorpay to confirm payment authenticity.
-   * 
-   * IMPORTANT: AuthorizePaymentInput does NOT include an amount field in Medusa v2.
-   * The amount stored in data.amount is already in Razorpay's smallest unit (paise for INR).
-   * We must NOT convert it again during verification.
    */
   async authorizePayment(
     input: AuthorizePaymentInput
@@ -289,13 +258,10 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
       const currency = String(data.currency || this.config.currency || "INR")
 
       try {
-        // data.amount is already in smallest unit (paise) from Razorpay
-        // Pass it directly to verification without conversion
         const status = await this.verifyPaymentResponse(
           data,
-          data.amount, // Already in paise - no conversion needed
-          currency,
-          true // Flag indicating amount is already in smallest unit
+          data.amount,
+          currency
         )
 
         return {
@@ -464,13 +430,7 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
     const data = (input.data || {}) as RazorpayPaymentData
 
     if (hasPaymentResponse(data)) {
-      // If payment is already processed, verify with the Razorpay amount (in paise)
-      await this.verifyPaymentResponse(
-        data, 
-        data.amount, 
-        input.currency_code,
-        true // data.amount is already in smallest unit from Razorpay
-      )
+      await this.verifyPaymentResponse(data, input.amount, input.currency_code)
 
       return { data }
     }
@@ -515,7 +475,6 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
 
   /**
    * Handles Razorpay webhook events (payment.captured, payment.failed, etc.)
-   * FIXED: Now extracts complete payment data for session updates
    */
   async getWebhookActionAndData(
     payload: ProviderWebhookPayload["payload"]
@@ -549,39 +508,13 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
       ? new BigNumber(paymentEntity.amount / 100)
       : new BigNumber(0)
 
-    // Extract payment response data from webhook for successful payments
-    const extractPaymentData = (paymentEntity: any) => {
-      if (!paymentEntity) {
-        return { session_id: sessionId, amount }
-      }
-
-      const paymentData = {
-        session_id: sessionId,
-        amount,
-        // Include complete payment response data for session updates
-        razorpay_payment_id: paymentEntity.id,
-        razorpay_order_id: paymentEntity.order_id,
-        // Generate signature for webhook-processed payments
-        razorpay_signature: `webhook_${paymentEntity.id}`,
-        // Additional payment details
-        status: paymentEntity.status,
-        method: paymentEntity.method,
-        currency: paymentEntity.currency,
-        // Mark this as webhook-processed to distinguish from frontend payments
-        webhook_processed: true,
-        webhook_event: eventType
-      }
-
-      return paymentData
-    }
-
     switch (eventType) {
       case "payment.captured":
-        return { action: "captured", data: extractPaymentData(paymentEntity) }
+        return { action: "captured", data: { session_id: sessionId, amount } }
       case "payment.authorized":
-        return { action: "authorized", data: extractPaymentData(paymentEntity) }
+        return { action: "authorized", data: { session_id: sessionId, amount } }
       case "payment.failed":
-        return { action: "failed", data: extractPaymentData(paymentEntity) }
+        return { action: "failed", data: { session_id: sessionId, amount } }
       default:
         return { action: "not_supported", data: { session_id: sessionId, amount } }
     }

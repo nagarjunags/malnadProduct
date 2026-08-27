@@ -27,7 +27,7 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
   const paymentSession = cart.payment_collection?.payment_sessions?.find(
     (s) => s.status === "pending"
   )
-
+//ngrj cr -- switch case the review button will return th ebutton related to the selected payment option
   switch (true) {
     case isStripeLike(paymentSession?.provider_id):
       return (
@@ -102,7 +102,9 @@ const RazorpayPaymentButton = ({
 
     try {
       await loadRazorpayScript()
+  console.log("---------------------------------------------------------------")//ngrjdoubt
 
+      console.log(cart)//ngrjdoubt
       const sessionData = session.data as Record<string, any>
       const razorpayOrderId = sessionData?.razorpay_order_id || sessionData?.id
       const keyId =

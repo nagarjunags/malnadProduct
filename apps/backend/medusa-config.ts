@@ -19,7 +19,7 @@ module.exports = defineConfig({
     vite: () => {
       return {
         server: {
-          allowedHosts: ["n2ms2dmwk35q.shares.zrok.io"],
+          allowedHosts: ["utd8deo0esdg.shares.zrok.io"],
         },
       }
     },

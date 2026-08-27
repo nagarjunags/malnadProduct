@@ -1,0 +1,10 @@
+{
+  "pbtResults": {
+    "1. Write bug condition exploration test": {
+      "status": "passed",
+      "failingExample": "Test FAILED as expected on unfixed code: \n- result.data only contains {amount: 1000, session_id: \"payses_01M0ZBXMNVWMXWDFGCCWHAE17K\"}\n- Missing razorpay_payment_id: \"pay_29QQoUBi66xm2f\" \n- Missing razorpay_order_id: \"order_DbJOWfscnM25g1\"\n- Missing razorpay_signature\nThis confirms the bug - webhook processing doesn't extract complete payment data from webhook payload for session updates.",
+      "lastRunTimestamp": 1787807854417
+    }
+  },
+  "executionHistory": {}
+}
