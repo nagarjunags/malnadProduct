@@ -1,5 +1,7 @@
 /dist
 .env
+.env.production
+.env.local
 .DS_Store
 /uploads
 /node_modules
@@ -24,3 +26,24 @@ build
 !.yarn/versions
 
 .medusa
+
+# PM2 logs and runtime files
+logs/
+*.log
+.pm2
+ecosystem.config.js
+
+# SSL certificates (if stored locally)
+*.pem
+*.key
+*.crt
+
+# Database backups
+*.sql
+*.dump
+
+# OS files
+Thumbs.db
+*.swp
+*.swo
+*~

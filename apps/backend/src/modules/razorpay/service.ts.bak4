@@ -244,7 +244,7 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
     try {
       const order = await this.getClient().orders.create({
         amount: razorpayAmount,
-        [Modules.CURRENCY]: currency,
+        currency: currency,
         receipt: `rcpt_${sessionId}`.slice(0, 40),
         payment_capture: true,
         notes: {

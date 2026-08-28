@@ -4,7 +4,7 @@ import {
 } from "@medusajs/framework/http"
 import { IPaymentModuleService } from "@medusajs/framework/types"
 import { MedusaError, Modules } from "@medusajs/framework/utils"
-import { z } from "zod"
+import { z } from "@medusajs/framework/zod"
 
 const RazorpayPaymentResponse = z.object({
   razorpay_payment_id: z.string().min(1),
