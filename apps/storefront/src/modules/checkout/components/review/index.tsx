@@ -47,7 +47,7 @@ const Review = ({ cart }: { cart: HttpTypes.StoreCart }) => {
               </Text>
             </div>
           </div>
-          {console.log(cart)}
+          
           <PaymentButton cart={cart} data-testid="submit-order-button" />
         </>
       )}
