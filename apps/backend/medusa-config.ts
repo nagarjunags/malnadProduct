@@ -19,7 +19,7 @@ module.exports = defineConfig({
     vite: () => {
       return {
         server: {
-          allowedHosts: ["utd8deo0esdg.shares.zrok.io"],
+          allowedHosts: ["xxn26pf57q5f.shares.zrok.io"],
         },
       }
     },
@@ -38,6 +38,28 @@ module.exports = defineConfig({
               key_secret: process.env.RAZORPAY_KEY_SECRET,
               currency: process.env.RAZORPAY_CURRENCY || "INR",
               webhook_secret: process.env.RAZORPAY_WEBHOOK_SECRET,
+            },
+          },
+        ],
+      },
+    },
+    {
+      resolve: "@medusajs/medusa/file",
+      options: {
+        providers: [
+          {
+            resolve: "@medusajs/medusa/file-s3",
+            id: "s3",
+            options: {
+              file_url: process.env.CLOUDFLARE_R2_PUBLIC_URL,
+              access_key_id: process.env.CLOUDFLARE_R2_ACCESS_KEY_ID,
+              secret_access_key: process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY,
+              region: process.env.CLOUDFLARE_R2_REGION || "auto",
+              bucket: process.env.CLOUDFLARE_R2_BUCKET,
+              endpoint: process.env.CLOUDFLARE_R2_ENDPOINT,
+              additional_client_config: {
+                forcePathStyle: true,
+              },
             },
           },
         ],

@@ -1,0 +1,13 @@
+# Build outputs
+apps/storefront/.next
+apps/backend/.medusa
+.turbo
+
+# Dependencies
+node_modules
+
+# Logs
+*.log
+
+# Environment
+.env*.local
