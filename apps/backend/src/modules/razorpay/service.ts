@@ -96,7 +96,7 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
       currency,
     }).resolvedOptions().maximumFractionDigits
 
-    return Math.round(Number(amount) * 10 ** fractionDigits)
+    return Math.round(Number(amount) * 10 ** (fractionDigits ?? 2))
   }
 
   private hasValidSignature(
@@ -235,10 +235,11 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
     // Razorpay expects amount in the smallest currency unit (paise for INR)
     // Input amount is in standard units (₹85), convert to paise (8500)
     const razorpayAmount = this.getSmallestUnitAmount(amount, currency)
-    const sessionId =
+    const sessionId = String(
       data.session_id ||
       (context as Record<string, unknown> | undefined)?.id ||
       Date.now().toString()
+    )
 
     try {
       const order = await this.getClient().orders.create({
@@ -249,7 +250,7 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
         notes: {
           session_id: sessionId,
         },
-      })
+      }) as any
 
       return {
         id: order.id,
