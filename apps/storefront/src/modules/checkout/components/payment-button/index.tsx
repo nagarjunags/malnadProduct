@@ -59,12 +59,34 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
 // Opens Razorpay checkout modal using order data stored in the payment session,
 // verifies payment on the backend, then places the order via Medusa.
 // ---------------------------------------------------------------------------
+interface RazorpaySuccessResponse {
+  razorpay_payment_id: string
+  razorpay_order_id: string
+  razorpay_signature: string
+}
+
+interface RazorpayFailureResponse {
+  error?: {
+    description?: string
+  }
+}
+
+interface RazorpayInstance {
+  on: (event: string, callback: (response: RazorpayFailureResponse) => void) => void
+  open: () => void
+}
+
+interface RazorpayWindow {
+  Razorpay?: new (options: Record<string, unknown>) => RazorpayInstance
+}
+
 const loadRazorpayScript = (): Promise<void> =>
   new Promise((resolve, reject) => {
     if (typeof window === "undefined") {
       return reject(new Error("window is undefined"))
     }
-    if ((window as any).Razorpay) {
+    const win = window as unknown as RazorpayWindow
+    if (win.Razorpay) {
       return resolve()
     }
     const script = document.createElement("script")
@@ -102,13 +124,10 @@ const RazorpayPaymentButton = ({
 
     try {
       await loadRazorpayScript()
-  console.log("---------------------------------------------------------------")//ngrjdoubt
-
-      console.log(cart)//ngrjdoubt
-      const sessionData = session.data as Record<string, any>
-      const razorpayOrderId = sessionData?.razorpay_order_id || sessionData?.id
+      const sessionData = (session.data || {}) as Record<string, unknown>
+      const razorpayOrderId = (sessionData?.razorpay_order_id || sessionData?.id) as string | undefined
       const keyId =
-        sessionData?.key_id ||
+        (sessionData?.key_id as string | undefined) ||
         process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID
 
       if (!razorpayOrderId) {
@@ -124,10 +143,10 @@ const RazorpayPaymentButton = ({
       }
 
       await new Promise<void>((resolve, reject) => {
-        const options: any = {
+        const options: Record<string, unknown> = {
           key: keyId,
           amount: sessionData?.amount,
-          currency: sessionData?.currency || "INR",
+          currency: (sessionData?.currency as string) || "INR",
           order_id: razorpayOrderId,
           name: "Order Payment",
           prefill: {
@@ -141,7 +160,7 @@ const RazorpayPaymentButton = ({
             email: cart.email || undefined,
             contact: cart.billing_address?.phone || undefined,
           },
-          handler: async function (response: any) {
+          handler: async function (response: RazorpaySuccessResponse) {
             try {
               await submitRazorpayPayment(cart, session.id, {
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -160,8 +179,12 @@ const RazorpayPaymentButton = ({
           },
         }
 
-        const rzp = new (window as any).Razorpay(options)
-        rzp.on("payment.failed", (response: any) => {
+        const win = window as unknown as RazorpayWindow
+        if (!win.Razorpay) {
+          throw new Error("Razorpay SDK not loaded")
+        }
+        const rzp = new win.Razorpay(options)
+        rzp.on("payment.failed", (response: RazorpayFailureResponse) => {
           reject(
             new Error(
               response?.error?.description || "Razorpay payment failed"

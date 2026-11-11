@@ -79,13 +79,32 @@ const CartDropdown = ({
       onMouseEnter={openAndCancel}
       onMouseLeave={close}
     >
-      <Popover className="relative h-full">
-        <PopoverButton className="h-full">
+      <Popover className="relative h-full flex items-center">
+        <PopoverButton className="h-full flex items-center focus:outline-none">
           <LocalizedClientLink
-            className="hover:text-ui-fg-base"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-mphal-sand/80 bg-white/80 hover:bg-mphal-forest hover:text-mphal-cream hover:border-mphal-forest text-mphal-brown transition-all duration-200 text-xs font-semibold tracking-wider uppercase shadow-2xs"
             href="/cart"
             data-testid="nav-cart-link"
-          >{`Cart (${totalItems})`}</LocalizedClientLink>
+          >
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            <span>Cart</span>
+            <span className="w-5 h-5 rounded-full bg-mphal-terracotta text-white flex items-center justify-center text-[10px] font-bold">
+              {totalItems}
+            </span>
+          </LocalizedClientLink>
         </PopoverButton>
         <Transition
           show={cartDropdownOpen}
@@ -99,11 +118,12 @@ const CartDropdown = ({
         >
           <PopoverPanel
             static
-            className="hidden small:block absolute top-[calc(100%+1px)] right-0 bg-white border-x border-b border-gray-200 w-[420px] text-ui-fg-base"
+            className="hidden small:block absolute top-[calc(100%+1px)] right-0 bg-[#FCFAF5] border border-mphal-sand/90 rounded-b-large shadow-2xl w-[420px] text-mphal-brown"
             data-testid="nav-cart-dropdown"
           >
-            <div className="p-4 flex items-center justify-center">
-              <h3 className="text-large-semi">Cart</h3>
+            <div className="p-4 flex items-center justify-between border-b border-mphal-sand/40">
+              <h3 className="font-display text-lg font-bold text-mphal-forest">Cart</h3>
+              <span className="text-xs text-mphal-mocha">{totalItems} {totalItems === 1 ? 'item' : 'items'}</span>
             </div>
             {cartState && cartState.items?.length ? (
               <>
@@ -193,11 +213,11 @@ const CartDropdown = ({
                   </div>
                   <LocalizedClientLink href="/cart" passHref>
                     <Button
-                      className="w-full"
+                      className="w-full bg-mphal-forest hover:bg-mphal-brown text-mphal-cream transition-colors"
                       size="large"
                       data-testid="go-to-cart-button"
                     >
-                      Go to cart
+                      Go to Cart
                     </Button>
                   </LocalizedClientLink>
                 </div>
@@ -205,15 +225,15 @@ const CartDropdown = ({
             ) : (
               <div>
                 <div className="flex py-16 flex-col gap-y-4 items-center justify-center">
-                  <div className="bg-gray-900 text-small-regular flex items-center justify-center w-6 h-6 rounded-full text-white">
+                  <div className="bg-mphal-sand/60 text-small-regular flex items-center justify-center w-8 h-8 rounded-full text-mphal-brown font-bold">
                     <span>0</span>
                   </div>
-                  <span>Your shopping bag is empty.</span>
+                  <span className="font-sans text-mphal-brown">Your shopping bag is empty.</span>
                   <div>
                     <LocalizedClientLink href="/store">
                       <>
                         <span className="sr-only">Go to all products page</span>
-                        <Button onClick={close}>Explore products</Button>
+                        <Button className="bg-mphal-forest hover:bg-mphal-brown text-mphal-cream transition-colors" onClick={close}>Explore Products</Button>
                       </>
                     </LocalizedClientLink>
                   </div>

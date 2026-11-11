@@ -27,8 +27,8 @@ const Summary = ({ cart }: SummaryProps) => {
 
   return (
     <div className="flex flex-col gap-y-4">
-      <Heading level="h2" className="text-[2rem] leading-[2.75rem]">
-        Summary
+      <Heading level="h2" className="font-display text-2xl font-bold text-mphal-forest">
+        Order Summary
       </Heading>
       <DiscountCode cart={cart} />
       <Divider />
@@ -37,7 +37,9 @@ const Summary = ({ cart }: SummaryProps) => {
         href={"/checkout?step=" + step}
         data-testid="checkout-button"
       >
-        <Button className="w-full h-10">Go to checkout</Button>
+        <Button className="w-full h-12 bg-mphal-forest hover:bg-mphal-brown text-mphal-cream font-sans font-bold tracking-wider text-xs uppercase rounded-rounded shadow-sm transition-all duration-200">
+          Proceed to Secure Checkout &rarr;
+        </Button>
       </LocalizedClientLink>
     </div>
   )

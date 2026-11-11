@@ -33,17 +33,38 @@ module.exports = {
           80: "#1F2937",
           90: "#111827",
         },
-        /* mpal brand palette — Malnad earth tones */
+        /* mphal brand palette — Malnad earth tones */
+        mphal: {
+          forest:     "#1B3B22", /* deep malnad forest green */
+          deep:       "#244B2C", /* evergreen canopy */
+          green:      "#386641", /* lush ghats foliage */
+          moss:       "#5C8045", /* tender moss */
+          brown:      "#4A2810", /* rich coffee roast */
+          terracotta: "#B85D19", /* earthenware barani & byadgi */
+          mocha:      "#7A431D", /* warm chicory mocha */
+          caramel:    "#C4874A", /* raw jaggery / caramel */
+          amber:      "#DDA15E", /* wild forest honey */
+          gold:       "#C99834", /* artisanal mustard gold */
+          cream:      "#F5ECD7", /* natural cream / steamed rice */
+          sand:       "#EAD5B0", /* warm riverbed sand */
+          parchment:  "#FBF7EE", /* warm artisanal paper bg */
+          mist:       "#FAF7F2", /* misty mountain bg */
+        },
         mpal: {
-          forest:  "#2D5016", /* deep malnad forest green */
-          green:   "#4A7C2F", /* mid canopy green */
-          moss:    "#6B8F47", /* light moss */
-          brown:   "#5C3A1E", /* rich coffee brown */
-          mocha:   "#8B5E3C", /* lighter mocha */
-          caramel: "#C4874A", /* caramel / jaggery */
-          cream:   "#F5ECD7", /* natural cream / rice */
-          sand:    "#EAD5B0", /* warm sand */
-          mist:    "#F9F5EE", /* misty pale bg */
+          forest:     "#1B3B22",
+          deep:       "#244B2C",
+          green:      "#386641",
+          moss:       "#5C8045",
+          brown:      "#4A2810",
+          terracotta: "#B85D19",
+          mocha:      "#7A431D",
+          caramel:    "#C4874A",
+          amber:      "#DDA15E",
+          gold:       "#C99834",
+          cream:      "#F5ECD7",
+          sand:       "#EAD5B0",
+          parchment:  "#FBF7EE",
+          mist:       "#FAF7F2",
         },
       },
       borderRadius: {

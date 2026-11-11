@@ -1,5 +1,3 @@
-import { clx } from "@modules/common/components/ui"
-
 import { getProductPrice } from "@lib/util/get-product-price"
 import { HttpTypes } from "@medusajs/types"
 
@@ -18,41 +16,38 @@ export default function ProductPrice({
   const selectedPrice = variant ? variantPrice : cheapestPrice
 
   if (!selectedPrice) {
-    return <div className="block w-32 h-9 bg-gray-100 animate-pulse" />
+    return <div className="block w-32 h-9 bg-mphal-sand/30 rounded animate-pulse" />
   }
 
   return (
-    <div className="flex flex-col text-ui-fg-base">
-      <span
-        className={clx("text-xl-semi", {
-          "text-ui-fg-interactive": selectedPrice.price_type === "sale",
-        })}
-      >
-        {!variant && "From "}
-        <span
-          data-testid="product-price"
-          data-value={selectedPrice.calculated_price_number}
-        >
-          {selectedPrice.calculated_price}
-        </span>
-      </span>
-      {selectedPrice.price_type === "sale" && (
-        <>
-          <p>
-            <span className="text-ui-fg-subtle">Original: </span>
-            <span
-              className="line-through"
-              data-testid="original-product-price"
-              data-value={selectedPrice.original_price_number}
-            >
-              {selectedPrice.original_price}
-            </span>
-          </p>
-          <span className="text-ui-fg-interactive">
-            -{selectedPrice.percentage_diff}%
+    <div className="flex flex-col py-1">
+      <div className="flex items-baseline gap-3">
+        <span className="font-sans text-2xl font-bold text-mphal-forest">
+          {!variant && <span className="text-sm font-normal text-mphal-mocha">From </span>}
+          <span
+            data-testid="product-price"
+            data-value={selectedPrice.calculated_price_number}
+          >
+            {selectedPrice.calculated_price}
           </span>
-        </>
-      )}
+        </span>
+
+        {selectedPrice.price_type === "sale" && (
+          <span
+            className="line-through text-sm font-sans text-mphal-mocha/60"
+            data-testid="original-product-price"
+            data-value={selectedPrice.original_price_number}
+          >
+            {selectedPrice.original_price}
+          </span>
+        )}
+
+        {selectedPrice.price_type === "sale" && (
+          <span className="bg-mphal-terracotta/15 text-mphal-terracotta text-xs font-sans font-bold px-2 py-0.5 rounded-sm">
+            Save {selectedPrice.percentage_diff}%
+          </span>
+        )}
+      </div>
     </div>
   )
 }

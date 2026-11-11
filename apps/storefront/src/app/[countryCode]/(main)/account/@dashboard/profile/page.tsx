@@ -9,8 +9,8 @@ import { listRegions } from "@lib/data/regions"
 import { retrieveCustomer } from "@lib/data/customer"
 
 export const metadata: Metadata = {
-  title: "Profile",
-  description: "View and edit your Medusa Store profile.",
+  title: "Profile | mphal",
+  description: "View and edit your mphal account profile and delivery addresses.",
 }
 
 export default async function Profile() {

@@ -20,43 +20,49 @@ type Props = {
 }
 
 export async function generateStaticParams() {
-  const product_categories = await listCategories()
+  const product_categories = await listCategories().catch(() => [])
 
-  if (!product_categories) {
-    return []
-  }
+  const countryCodes = await listRegions()
+    .then((regions: StoreRegion[]) =>
+      regions?.map((r) => r.countries?.map((c) => c.iso_2)).flat()
+    )
+    .catch(() => ["in", "dk", "us"])
 
-  const countryCodes = await listRegions().then((regions: StoreRegion[]) =>
-    regions?.map((r) => r.countries?.map((c) => c.iso_2)).flat()
-  )
-
-  const categoryHandles = product_categories.map(
+  const backendCategoryHandles = (product_categories || []).map(
     (category: HttpTypes.StoreProductCategory) => category.handle
   )
 
   const staticParams = countryCodes
     ?.map((countryCode: string | undefined) =>
-      categoryHandles.map((handle: string) => ({
+      backendCategoryHandles.map((handle: string) => ({
         countryCode,
         category: [handle],
       }))
     )
     .flat()
 
-  return staticParams
+  return staticParams || []
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
+
   try {
-    const productCategory = await getCategoryByHandle(params.category)
+    const productCategory = await getCategoryByHandle(params.category).catch(
+      () => null
+    )
 
-    const title = productCategory.name + " | Medusa Store"
+    if (!productCategory) {
+      notFound()
+    }
 
-    const description = productCategory.description ?? `${title} category.`
+    const title = `${productCategory.name} | mphal`
+    const description =
+      productCategory.description ??
+      `Explore ${productCategory.name} on mphal.`
 
     return {
-      title: `${title} | Medusa Store`,
+      title,
       description,
       alternates: {
         canonical: `${params.category.join("/")}`,
@@ -73,7 +79,9 @@ export default async function CategoryPage(props: Props) {
   const { sortBy, page } = searchParams
   const optionValueIds = parseOptionValueIds(searchParams)
 
-  const productCategory = await getCategoryByHandle(params.category)
+  const productCategory = await getCategoryByHandle(params.category).catch(
+    () => null
+  )
 
   if (!productCategory) {
     notFound()
