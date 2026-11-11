@@ -8,31 +8,46 @@ type ProductInfoProps = {
 
 const ProductInfo = ({ product }: ProductInfoProps) => {
   return (
-    <div id="product-info">
-      <div className="flex flex-col gap-y-4 lg:max-w-[500px] mx-auto">
-        {product.collection && (
-          <LocalizedClientLink
-            href={`/collections/${product.collection.handle}`}
-            className="text-medium text-ui-fg-muted hover:text-ui-fg-subtle"
-          >
-            {product.collection.title}
-          </LocalizedClientLink>
-        )}
-        <Heading
-          level="h2"
-          className="text-3xl leading-10 text-ui-fg-base"
-          data-testid="product-title"
+    <div id="product-info" className="space-y-4">
+      {/* Category or collection breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-sans">
+        <LocalizedClientLink
+          href="/store"
+          className="text-mphal-mocha/70 hover:text-mphal-terracotta transition-colors"
         >
-          {product.title}
-        </Heading>
+          Store
+        </LocalizedClientLink>
+        {product.collection && (
+          <>
+            <span className="text-mphal-sand">&bull;</span>
+            <LocalizedClientLink
+              href={`/collections/${product.collection.handle}`}
+              className="text-mphal-caramel font-semibold uppercase tracking-wider hover:text-mphal-forest transition-colors"
+            >
+              {product.collection.title}
+            </LocalizedClientLink>
+          </>
+        )}
+      </div>
 
+      {/* Product Title */}
+      <Heading
+        level="h1"
+        className="font-display text-2xl sm:text-3xl font-bold text-mphal-forest leading-snug"
+        data-testid="product-title"
+      >
+        {product.title}
+      </Heading>
+
+      {/* Description from backend */}
+      {product.description && (
         <Text
-          className="text-medium text-ui-fg-subtle whitespace-pre-line"
+          className="font-sans text-sm text-mphal-mocha leading-relaxed whitespace-pre-line pt-2"
           data-testid="product-description"
         >
           {product.description}
         </Text>
-      </div>
+      )}
     </div>
   )
 }

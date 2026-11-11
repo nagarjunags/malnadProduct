@@ -90,7 +90,7 @@ export default function ProductActions({
     }
 
     router.replace(pathname + "?" + params.toString())
-  }, [selectedVariant, isValidVariant])
+  }, [selectedVariant, isValidVariant, pathname, router, searchParams])
 
   // check if the selected variant is in stock
   const inStock = useMemo(() => {
@@ -99,7 +99,7 @@ export default function ProductActions({
       return true
     }
 
-    // If we allow back orders on the variant, we can add to cart
+    // If we allow backorders on the variant, we can add to cart
     if (selectedVariant?.allow_backorder) {
       return true
     }
@@ -137,7 +137,7 @@ export default function ProductActions({
 
   return (
     <>
-      <div className="flex flex-col gap-y-2" ref={actionsRef}>
+      <div className="flex flex-col gap-y-3" ref={actionsRef}>
         <div>
           {(product.variants?.length ?? 0) > 1 && (
             <div className="flex flex-col gap-y-4">
@@ -171,17 +171,17 @@ export default function ProductActions({
             isAdding ||
             !isValidVariant
           }
-          variant="primary"
-          className="w-full h-10"
+          className="w-full h-12 bg-mphal-forest hover:bg-mphal-brown text-mphal-cream font-sans font-bold tracking-wider text-xs uppercase rounded-rounded shadow-sm transition-all duration-200"
           isLoading={isAdding}
           data-testid="add-product-button"
         >
           {!selectedVariant && !options
-            ? "Select variant"
+            ? "Select Option"
             : !inStock || !isValidVariant
             ? "Out of stock"
             : "Add to cart"}
         </Button>
+
         <MobileActions
           product={product}
           variant={selectedVariant}

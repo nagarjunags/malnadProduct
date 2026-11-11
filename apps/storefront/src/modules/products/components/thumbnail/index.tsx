@@ -2,8 +2,6 @@ import { Container, clx } from "@modules/common/components/ui"
 import Image from "next/image"
 import React from "react"
 
-import PlaceholderImage from "@modules/common/icons/placeholder-image"
-
 type ThumbnailProps = {
   thumbnail?: string | null
   images?: { url?: string }[] | null
@@ -17,7 +15,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   thumbnail,
   images,
   size = "small",
-  isFeatured,
+  isFeatured: _isFeatured,
   className,
   "data-testid": dataTestid,
 }) => {
@@ -26,42 +24,53 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   return (
     <Container
       className={clx(
-        "relative w-full overflow-hidden p-4 bg-ui-bg-subtle shadow-elevation-card-rest rounded-large group-hover:shadow-elevation-card-hover transition-shadow ease-in-out duration-150",
+        "relative w-full overflow-hidden p-0 bg-[#F5EFE6] border border-mphal-sand/60 rounded-rounded group-hover:border-mphal-caramel/50 transition-all ease-in-out duration-200",
         className,
         {
-          "aspect-[11/14]": isFeatured,
-          "aspect-[9/16]": !isFeatured && size !== "square",
-          "aspect-[1/1]": size === "square",
+          "aspect-square": true,
           "w-[180px]": size === "small",
           "w-[290px]": size === "medium",
           "w-[440px]": size === "large",
-          "w-full": size === "full",
+          "w-full": size === "full" || size === "square",
         }
       )}
       data-testid={dataTestid}
     >
-      <ImageOrPlaceholder image={initialImage} size={size} />
+      <ImageOrPlaceholder image={initialImage} />
     </Container>
   )
 }
 
 const ImageOrPlaceholder = ({
   image,
-  size,
-}: Pick<ThumbnailProps, "size"> & { image?: string }) => {
+}: { image?: string }) => {
   return image ? (
     <Image
       src={image}
-      alt="Thumbnail"
-      className="absolute inset-0 object-cover object-center"
+      alt="Product thumbnail"
+      className="absolute inset-0 object-cover object-center group-hover:scale-105 transition-transform duration-300"
       draggable={false}
-      quality={50}
+      quality={80}
       sizes="(max-width: 576px) 280px, (max-width: 768px) 360px, (max-width: 992px) 480px, 800px"
       fill
     />
   ) : (
-    <div className="w-full h-full absolute inset-0 flex items-center justify-center">
-      <PlaceholderImage size={size === "small" ? 16 : 24} />
+    <div className="w-full h-full absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#FAF5EE] to-[#EFE7D8] text-mphal-forest/30 p-4">
+      <svg
+        width="40"
+        height="40"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="text-mphal-mocha/40 mb-1"
+      >
+        <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+        <circle cx="9" cy="9" r="2" />
+        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+      </svg>
     </div>
   )
 }

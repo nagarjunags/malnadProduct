@@ -11,21 +11,19 @@ import CountrySelect from "../country-select"
 import LanguageSelect from "../language-select"
 import { Locale } from "@lib/data/locales"
 
-
-const SideMenuItems = {
-  Home: "/",
-  Store: "/store",
-  Account: "/account",
-  Cart: "/cart",
-}
-
 type SideMenuProps = {
   regions: HttpTypes.StoreRegion[] | null
   locales: Locale[] | null
   currentLocale: string | null
+  categories?: HttpTypes.StoreProductCategory[] | null
 }
 
-const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
+const SideMenu = ({
+  regions,
+  locales,
+  currentLocale,
+  categories,
+}: SideMenuProps) => {
   const countryToggleState = useToggleState()
   const languageToggleState = useToggleState()
 
@@ -38,7 +36,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
               <div className="relative flex h-full">
                 <Popover.Button
                   data-testid="nav-menu-button"
-                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-mpal-forest font-sans text-sm text-mpal-brown tracking-wide"
+                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-mphal-forest font-sans text-sm text-mphal-brown tracking-wide"
                 >
                   Menu
                 </Popover.Button>
@@ -66,29 +64,79 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                   <div
                     data-testid="nav-menu-popup"
                     className="flex flex-col h-full rounded-rounded justify-between p-6"
-                    style={{ background: "rgba(45,80,22,0.92)", backdropFilter: "blur(16px)" }}
+                    style={{
+                      background: "rgba(27,59,34,0.95)",
+                      backdropFilter: "blur(16px)",
+                    }}
                   >
                     <div className="flex justify-end" id="xmark">
-                      <button data-testid="close-menu-button" onClick={close}>
+                      <button
+                        data-testid="close-menu-button"
+                        onClick={close}
+                        className="text-mphal-cream hover:text-mphal-amber transition-colors"
+                      >
                         <XMark />
                       </button>
                     </div>
-                    <ul className="flex flex-col gap-6 items-start justify-start">
-                      {Object.entries(SideMenuItems).map(([name, href]) => {
-                        return (
-                          <li key={name}>
+                    <ul className="flex flex-col gap-4 sm:gap-5 items-start justify-start overflow-y-auto max-h-[60vh] no-scrollbar py-2">
+                      <li>
+                        <LocalizedClientLink
+                          href="/"
+                          className="font-display text-2xl sm:text-3xl leading-snug hover:text-mphal-amber transition-colors"
+                          style={{ color: "#F5ECD7" }}
+                          onClick={close}
+                          data-testid="home-link"
+                        >
+                          Home
+                        </LocalizedClientLink>
+                      </li>
+                      <li>
+                        <LocalizedClientLink
+                          href="/store"
+                          className="font-display text-2xl sm:text-3xl leading-snug hover:text-mphal-amber transition-colors"
+                          style={{ color: "#F5ECD7" }}
+                          onClick={close}
+                          data-testid="store-link"
+                        >
+                          All Products
+                        </LocalizedClientLink>
+                      </li>
+                      {categories &&
+                        categories.map((cat) => (
+                          <li key={cat.id}>
                             <LocalizedClientLink
-                              href={href}
-                              className="font-display text-3xl leading-10 hover:text-mpal-caramel transition-colors"
+                              href={`/categories/${cat.handle}`}
+                              className="font-display text-2xl sm:text-3xl leading-snug hover:text-mphal-amber transition-colors"
                               style={{ color: "#F5ECD7" }}
                               onClick={close}
-                              data-testid={`${name.toLowerCase()}-link`}
+                              data-testid={`${cat.handle}-link`}
                             >
-                              {name}
+                              {cat.name}
                             </LocalizedClientLink>
                           </li>
-                        )
-                      })}
+                        ))}
+                      <li>
+                        <LocalizedClientLink
+                          href="/account"
+                          className="font-display text-2xl sm:text-3xl leading-snug hover:text-mphal-amber transition-colors"
+                          style={{ color: "#F5ECD7" }}
+                          onClick={close}
+                          data-testid="account-link"
+                        >
+                          Account
+                        </LocalizedClientLink>
+                      </li>
+                      <li>
+                        <LocalizedClientLink
+                          href="/cart"
+                          className="font-display text-2xl sm:text-3xl leading-snug hover:text-mphal-amber transition-colors"
+                          style={{ color: "#F5ECD7" }}
+                          onClick={close}
+                          data-testid="cart-link"
+                        >
+                          Cart
+                        </LocalizedClientLink>
+                      </li>
                     </ul>
                     <div className="flex flex-col gap-y-6">
                       {!!locales?.length && (
@@ -104,8 +152,8 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                           />
                           <ArrowRightMini
                             className={clx(
-                              "transition-transform duration-150",
-                              languageToggleState.state ? "-rotate-90" : ""
+                              "transition-transform duration-150 text-mphal-sand",
+                              languageToggleState.state && "-rotate-90"
                             )}
                           />
                         </div>
@@ -115,21 +163,19 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                         onMouseEnter={countryToggleState.open}
                         onMouseLeave={countryToggleState.close}
                       >
-                        {regions && (
-                          <CountrySelect
-                            toggleState={countryToggleState}
-                            regions={regions}
-                          />
-                        )}
+                        <CountrySelect
+                          toggleState={countryToggleState}
+                          regions={regions}
+                        />
                         <ArrowRightMini
                           className={clx(
-                            "transition-transform duration-150",
-                            countryToggleState.state ? "-rotate-90" : ""
+                            "transition-transform duration-150 text-mphal-sand",
+                            countryToggleState.state && "-rotate-90"
                           )}
                         />
                       </div>
-                      <Text className="flex justify-between txt-compact-small" style={{ color: "rgba(245,236,215,0.6)" }}>
-                        © {new Date().getFullYear()} mpal. All rights reserved.
+                      <Text className="flex justify-between font-sans text-xs text-mphal-sand/70">
+                        &copy; {new Date().getFullYear()} mphal. All rights reserved.
                       </Text>
                     </div>
                   </div>

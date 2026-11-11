@@ -58,17 +58,42 @@
     @apply px-4 py-2 border border-mpal-brown rounded-full hover:bg-mpal-brown hover:text-mpal-cream transition-colors duration-200 ease-in;
   }
 
-  /* mpal brand utilities */
+  /* mphal brand utilities */
+  .mphal-heading {
+    @apply font-display text-mphal-brown;
+  }
+
+  .mphal-btn-primary {
+    @apply bg-mphal-forest text-mphal-cream px-6 py-3 rounded-rounded hover:bg-mphal-brown shadow-sm transition-all duration-200 font-sans font-semibold tracking-wide inline-flex items-center justify-center gap-2;
+  }
+
+  .mphal-btn-secondary {
+    @apply bg-mphal-terracotta text-white px-6 py-3 rounded-rounded hover:bg-mphal-brown shadow-sm transition-all duration-200 font-sans font-semibold tracking-wide inline-flex items-center justify-center gap-2;
+  }
+
+  .mphal-btn-outline {
+    @apply border border-mphal-forest text-mphal-forest bg-transparent px-6 py-3 rounded-rounded hover:bg-mphal-forest hover:text-mphal-cream transition-all duration-200 font-sans font-semibold tracking-wide inline-flex items-center justify-center gap-2;
+  }
+
+  .mphal-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase;
+  }
+
+  .mphal-card {
+    @apply bg-[#FCFAF5] border border-mphal-sand/60 rounded-large transition-all duration-300 hover:border-mphal-terracotta/40 hover:shadow-lg;
+  }
+
+  /* Legacy aliases for backward compatibility */
   .mpal-heading {
-    @apply font-display text-mpal-brown;
+    @apply font-display text-mphal-brown;
   }
 
   .mpal-btn-primary {
-    @apply bg-mpal-forest text-mpal-cream px-6 py-3 rounded-soft hover:bg-mpal-brown transition-colors duration-200 font-sans font-semibold tracking-wide;
+    @apply mphal-btn-primary;
   }
 
   .mpal-btn-outline {
-    @apply border border-mpal-forest text-mpal-forest px-6 py-3 rounded-soft hover:bg-mpal-forest hover:text-mpal-cream transition-colors duration-200 font-sans font-semibold tracking-wide;
+    @apply mphal-btn-outline;
   }
 
   .text-xsmall-regular {

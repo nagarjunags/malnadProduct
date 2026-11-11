@@ -74,7 +74,10 @@ export const listProducts = async ({
           ...queryParams,
         },
         headers,
-        next,
+        next: {
+          revalidate: 60,
+          ...next,
+        },
         cache: "force-cache",
       }
     )
@@ -132,7 +135,8 @@ export const listProductsWithSort = async ({
 
   const sortedProducts = sortProducts(products, sortBy)
 
-  const pageParam = (page - 1) * limit
+  const _page = Math.max(page || 1, 1)
+  const pageParam = (_page - 1) * limit
 
   const filteredCount = products.length
 

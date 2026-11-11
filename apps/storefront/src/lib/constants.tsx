@@ -35,11 +35,11 @@ export const paymentInfoMap: Record<
   },
   // Razorpay (add common provider ids here)
   pp_razorpay_razorpay: {
-    title: "Razorpay",
+    title: "UPI / Cards / NetBanking (Razorpay)",
     icon: <CreditCard />,
   },
   razorpay: {
-    title: "Razorpay",
+    title: "UPI / Cards / NetBanking (Razorpay)",
     icon: <CreditCard />,
   },
   // Add more payment providers here

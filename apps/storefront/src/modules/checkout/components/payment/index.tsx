@@ -112,26 +112,26 @@ const Payment = ({
   }, [isOpen])
 
   return (
-    <div className="bg-white">
+    <div className="bg-white border border-mphal-sand/70 rounded-large p-6 sm:p-8 shadow-xs">
       <div className="flex flex-row items-center justify-between mb-6">
         <Heading
           level="h2"
           className={clx(
-            "flex flex-row text-3xl-regular gap-x-2 items-baseline",
+            "flex flex-row font-display text-2xl font-bold text-mphal-forest gap-x-2 items-center",
             {
               "opacity-50 pointer-events-none select-none":
                 !isOpen && !paymentReady,
             }
           )}
         >
-          Payment
-          {!isOpen && paymentReady && <CheckCircleSolid />}
+          Payment Option
+          {!isOpen && paymentReady && <CheckCircleSolid className="text-mphal-forest" />}
         </Heading>
         {!isOpen && paymentReady && (
           <Text>
             <button
               onClick={handleEdit}
-              className="text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
+              className="text-xs font-sans font-bold uppercase tracking-wider text-mphal-terracotta hover:text-mphal-brown"
               data-testid="edit-payment-button"
             >
               Edit
