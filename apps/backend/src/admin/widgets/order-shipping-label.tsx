@@ -280,7 +280,7 @@ const buildLabelHtml = (order: AdminOrder): string => {
     <!-- Header -->
     <div class="header-row">
       <div>
-        <div class="brand-title">Mpal Store</div>
+        <div class="brand-title">mphal</div>
         <div class="brand-sub">Malnad Homemade Products</div>
       </div>
       <div class="order-badge">
@@ -313,7 +313,7 @@ const buildLabelHtml = (order: AdminOrder): string => {
     <div class="dispatch-row">
       <div class="dispatch-from">
         <div class="section-label">SHIP FROM (RETURN ADDRESS):</div>
-        <div style="font-weight: 700;">Mpal Store (mphal)</div>
+        <div style="font-weight: 700;">mphal</div>
         <div>Western Ghats Agro Hub</div>
         <div>Shivamogga, Karnataka - 577201</div>
         <div>Support: 8618333210</div>
@@ -530,7 +530,7 @@ const OrderShippingLabelWidget = ({ data }: DetailWidgetProps<AdminOrder>) => {
             <div className="flex justify-between items-center border-b-2 border-black pb-2 mb-2">
               <div>
                 <div className="text-base font-extrabold uppercase">
-                  Mpal Store
+                  mphal
                 </div>
                 <div className="text-[10px] text-gray-600 uppercase">
                   Malnad Homemade Products
@@ -579,7 +579,7 @@ const OrderShippingLabelWidget = ({ data }: DetailWidgetProps<AdminOrder>) => {
                 <span className="font-bold text-gray-500 block uppercase">
                   From:
                 </span>
-                <span className="font-bold">Mpal Store</span>
+                <span className="font-bold">mphal</span>
                 <div>Shivamogga, Karnataka - 577201</div>
               </div>
               <div>

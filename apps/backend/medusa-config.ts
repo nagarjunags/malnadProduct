@@ -21,6 +21,25 @@ module.exports = defineConfig({
         server: {
           allowedHosts: ["xxn26pf57q5f.shares.zrok.io"],
         },
+        plugins: [
+          {
+            name: "brand-retitle",
+            transform(code: string) {
+              if (code.includes("- Medusa") || code.includes('DEFAULT_TITLE = "Medusa"')) {
+                return {
+                  code: code
+                    .replaceAll("- Medusa", "- mphal")
+                    .replaceAll('DEFAULT_TITLE = "Medusa"', 'DEFAULT_TITLE = "mphal"'),
+                  map: null,
+                }
+              }
+              return null
+            },
+            transformIndexHtml(html: string) {
+              return html.replace(/<title>.*?<\/title>/, "<title>mphal</title>")
+            },
+          },
+        ],
       }
     },
   },

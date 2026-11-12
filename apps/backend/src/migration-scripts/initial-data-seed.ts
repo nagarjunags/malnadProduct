@@ -45,7 +45,7 @@ export default async function initial_data_seed({
       salesChannelsData: [
         {
           name: "Default Sales Channel",
-          description: "Created by Medusa",
+          description: "Created by mphal",
         },
       ],
     },
@@ -345,7 +345,7 @@ export default async function initial_data_seed({
     input: {
       products: [
         {
-          title: "Medusa T-Shirt",
+          title: "mphal T-Shirt",
           category_ids: [
             categoryResult.find((cat) => cat.name === "Shirts")!.id,
           ],
@@ -526,7 +526,7 @@ export default async function initial_data_seed({
           ],
         },
         {
-          title: "Medusa Sweatshirt",
+          title: "mphal Sweatshirt",
           category_ids: [
             categoryResult.find((cat) => cat.name === "Sweatshirts")!.id,
           ],
@@ -622,7 +622,7 @@ export default async function initial_data_seed({
           ],
         },
         {
-          title: "Medusa Sweatpants",
+          title: "mphal Sweatpants",
           category_ids: [
             categoryResult.find((cat) => cat.name === "Pants")!.id,
           ],
@@ -718,7 +718,7 @@ export default async function initial_data_seed({
           ],
         },
         {
-          title: "Medusa Shorts",
+          title: "mphal Shorts",
           category_ids: [
             categoryResult.find((cat) => cat.name === "Merch")!.id,
           ],
