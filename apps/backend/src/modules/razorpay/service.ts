@@ -285,8 +285,12 @@ class RazorpayProviderService extends AbstractPaymentProvider<RazorpayOptions> {
   ): Promise<AuthorizePaymentOutput> {
     const data = (input.data || {}) as RazorpayPaymentData
 
-    // If we have signature data (client has completed payment), verify it
-    if (hasPaymentResponse(data)) {
+    const hasAttemptedPayment =
+      typeof data.razorpay_payment_id === "string" ||
+      typeof data.razorpay_signature === "string"
+
+    // If we have signature data or an attempted payment response, verify it
+    if (hasPaymentResponse(data) || hasAttemptedPayment) {
       const currency = String(data.currency || this.config.currency || "INR")
 
       try {

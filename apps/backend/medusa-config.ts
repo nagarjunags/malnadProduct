@@ -25,18 +25,68 @@ module.exports = defineConfig({
           {
             name: "brand-retitle",
             transform(code: string) {
-              if (code.includes("- Medusa") || code.includes('DEFAULT_TITLE = "Medusa"')) {
+              if (
+                code.includes("- Medusa") ||
+                code.includes('DEFAULT_TITLE = "Medusa"') ||
+                code.includes("Welcome to Medusa") ||
+                code.includes("Medusa Admin")
+              ) {
+                let updated = code
+                  .replaceAll("Welcome to Medusa", "Welcome to mphal")
+                  .replaceAll("Medusa Admin", "mphal Admin")
+                  .replaceAll('DEFAULT_TITLE = "Medusa"', 'DEFAULT_TITLE = "mphal"')
+                  .replaceAll("- Medusa", "- mphal")
+
+                if (updated.includes("return `${pageTitle} - mphal`;")) {
+                  updated = updated.replaceAll(
+                    "return `${pageTitle} - mphal`;",
+                    "return pageTitle.includes(\"mphal\") ? pageTitle : `${pageTitle} - mphal`;"
+                  )
+                }
+
                 return {
-                  code: code
-                    .replaceAll("- Medusa", "- mphal")
-                    .replaceAll('DEFAULT_TITLE = "Medusa"', 'DEFAULT_TITLE = "mphal"'),
+                  code: updated,
                   map: null,
                 }
               }
               return null
             },
             transformIndexHtml(html: string) {
-              return html.replace(/<title>.*?<\/title>/, "<title>mphal</title>")
+              const replaced = html.replace(/<title>.*?<\/title>/, "<title>mphal</title>")
+              const script = `<script>
+  (() => {
+    const sanitize = () => {
+      if (document.title.includes("Medusa")) {
+        document.title = document.title.replace(/Medusa/g, "mphal")
+      }
+      if (document.title.includes("Welcome to mphal - mphal")) {
+        document.title = "Welcome to mphal"
+      }
+      const walker = document.createTreeWalker(
+        document.body || document.documentElement,
+        NodeFilter.SHOW_TEXT,
+        null
+      )
+      let node
+      while ((node = walker.nextNode())) {
+        if (node.nodeValue && node.nodeValue.includes("Welcome to Medusa")) {
+          node.nodeValue = node.nodeValue.replace(/Welcome to Medusa/g, "Welcome to mphal")
+        }
+        if (node.nodeValue && node.nodeValue.includes("Medusa Admin")) {
+          node.nodeValue = node.nodeValue.replace(/Medusa Admin/g, "mphal Admin")
+        }
+      }
+    }
+    new MutationObserver(sanitize).observe(document.documentElement, {
+      subtree: true,
+      childList: true,
+      characterData: true,
+    })
+    window.addEventListener("DOMContentLoaded", sanitize)
+    sanitize()
+  })()
+</script>`
+              return replaced.replace("</head>", `${script}</head>`)
             },
           },
         ],
