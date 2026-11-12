@@ -75,10 +75,10 @@ export const listProducts = async ({
         },
         headers,
         next: {
-          revalidate: 60,
+          revalidate: 0,
           ...next,
         },
-        cache: "force-cache",
+        cache: "no-store",
       }
     )
     .then(({ products, count }) => {
