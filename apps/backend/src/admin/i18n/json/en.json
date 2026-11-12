@@ -1,0 +1,12 @@
+{
+  "login": {
+    "title": "Welcome to mphal",
+    "hint": "Sign in to access the account area"
+  },
+  "invite": {
+    "title": "Welcome to mphal",
+    "hint": "Create your account below",
+    "successHint": "Get started with mphal Admin right away.",
+    "successAction": "Start mphal Admin"
+  }
+}
